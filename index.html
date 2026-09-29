@@ -247,9 +247,23 @@
       opacity: 1;
     }
 
+    .login-divider {
+      position: relative;
+      text-align: center;
+      margin: 24px 0 14px;
+    }
+
+    .login-divider span {
+      position: relative;
+      font-size: 16px;
+      font-weight: 700;
+      color: #16A34A;
+      letter-spacing: 0.5px;
+    }
+
     .btn-absen-ronda {
       width: 100%;
-      padding: 14px;
+      padding: 10px 12px;
       background: linear-gradient(135deg,#10b981 0%,#047857 100%);
       color: #ffffff;
       border: none;
@@ -1194,6 +1208,13 @@
       <div id="loginError" class="alert-danger" style="display:none;">
         <i class="fa-solid fa-circle-exclamation"></i>
         <span id="errorMsg">NIK tidak ditemukan.</span>
+      </div>
+
+      <div class="login-divider">
+        <span>
+          <i class="fa-solid fa-bolt"></i>
+          Quick Access
+        </span>
       </div>
 
       <button class="btn-absen-ronda" onclick="openAbsenRondaDirect()">
