@@ -1683,24 +1683,24 @@
   <!-- ================= BOTTOM NAVBAR ================= -->
 
   <nav id="bottomNavbar" class="bottom-navbar" aria-label="Navigasi utama">
-    <button class="bottom-nav-item active" onclick="bottomNavHome()">
-      <i class="fa-solid fa-house"></i>
-      <span>Beranda</span>
+    <button class="btn-exit" onclick="logout()">
+      <i class="fas fa-power-off"></i>
+      <span>Logout</span>
     </button>
-
+    
     <button class="bottom-nav-item" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
       <i class="fa-solid fa-paper-plane"></i>
-      <span>Surat</span>
+      <span>Pengantar</span>
     </button>
 
-    <button class="bottom-nav-item bottom-nav-center" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
-      <i class="fa-solid fa-shield-halved"></i>
-      <span>Ronda</span>
-    </button>
-
-    <button class="bottom-nav-item" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
+    <button class="bottom-nav-item bottom-nav-center" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
       <i class="fa-solid fa-id-badge"></i>
-      <span>Data</span>
+      <span>MyData</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="openAppPage('Informasi Data', BASE_URLS.infoData)">
+      <i class="fa-solid fa-chart-pie"></i>
+      <span>Info Data</span>
     </button>
 
     <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
