@@ -855,8 +855,8 @@
       padding: 12px 16px;
       border-radius: 12px;
       color: #334155;
-      font-weight: 700;
-      font-size: 13px;
+      font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
       text-align: left;
       transition: all 0.2s ease;
@@ -1536,14 +1536,6 @@
         </div>
 
         <div class="menu-item"
-          onclick="openAppPage('Profil RT', BASE_URLS.profil)">
-          <div class="menu-icon-box bg-profil">
-            <i class="fa-solid fa-house-flag"></i>
-          </div>
-          <span class="menu-label">Profil RT</span>
-        </div>
-
-        <div class="menu-item"
           onclick="openAppPage('Program Kerja', BASE_URLS.programKerja)">
           <div class="menu-icon-box bg-progra">
             <i class="fa-solid fa-clipboard-list"></i>
@@ -1551,8 +1543,15 @@
           <span class="menu-label">Program Kerja</span>
         </div>
 
-      </div>
+        <div class="menu-item"
+          onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)">
+          <div class="menu-icon-box bg-tanya">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <span class="menu-label">Tanya Jawab</span>
+        </div>
 
+      </div>
 
       <!-- MENU LAINNYA -->
 
@@ -1585,11 +1584,11 @@
           </div>
 
           <div class="menu-item"
-            onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)">
-            <div class="menu-icon-box bg-tanya">
-              <i class="fa-solid fa-comments"></i>
+            onclick="openAppPage('Profil RT', BASE_URLS.profil)">
+            <div class="menu-icon-box bg-profil">
+              <i class="fa-solid fa-house-flag"></i>
             </div>
-            <span class="menu-label">Tanya Jawab</span>
+            <span class="menu-label">Profil RT</span>
           </div>
 
           <div class="menu-item"
@@ -1789,12 +1788,12 @@
           Tanya Jawab
         </li>
 
-      </ul>
-
       <button class="sidebar-logout-btn" onclick="logout()">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Logout / Keluar</span>
       </button>
+
+      </ul>
 
     </div>
 
