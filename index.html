@@ -715,7 +715,7 @@
 
     .bottom-nav-item {
       height: 56px;
-      transform: translateY(-8px);
+      transform: translateY(0px);
       border: none;
       background: transparent;
       color: #64748b;
@@ -742,7 +742,7 @@
     .bottom-nav-center {
       width: 62px;
       height: 62px;
-      margin: 0 auto 28px;
+      margin: 0 auto 18px;
       border-radius: 50%;
       background: linear-gradient(135deg,#10b981 0%,#047857 100%);
       color: #ffffff;
@@ -1700,7 +1700,7 @@
 
     <button class="bottom-nav-item" onclick="openAppPage('Informasi Data', BASE_URLS.infoData)">
       <i class="fa-solid fa-chart-pie"></i>
-      <span>Info Data</span>
+      <span>Statistik</span>
     </button>
 
     <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
@@ -2274,27 +2274,13 @@
       );
     }
 
-
     document.getElementById('subPageView')
       .classList.add('active');
   }
 
-
   function closeSubpage() {
     closeAppPage();
   }
-
-
-  // ==========================================================
-  // BOTTOM NAVBAR
-  // ==========================================================
-
-  function bottomNavHome() {
-    if (isSubPageOpen) {
-      closeAppPage();
-    }
-  }
-
 
   // ==========================================================
   // SIDEBAR
@@ -2304,45 +2290,31 @@
 
     const backdrop =
       document.getElementById('sidebarBackdrop');
-
     const panel =
       document.getElementById('sidebarPanel');
-
-
     if (show) {
-
       backdrop.classList.add('active');
       panel.classList.add('active');
-
     } else {
-
       backdrop.classList.remove('active');
       panel.classList.remove('active');
     }
   }
 
-
   function openAppFromSidebar(title, baseUrl) {
-
     toggleSidebar(false);
-
     openAppPage(title, baseUrl);
   }
-
 
   // ==========================================================
   // BUKA SUB-PAGE
   // ==========================================================
 
   function openAppPage(title, baseUrl) {
-
     if (!baseUrl || baseUrl === 'about:blank') {
       return;
     }
-
-
     let targetUrl = baseUrl;
-
 
     /*
      * NIK hanya dikirim jika user sudah login.
@@ -2352,7 +2324,6 @@
      */
 
     if (currentUser.nik) {
-
       const separator =
         baseUrl.indexOf('?') >= 0
           ? '&'
@@ -2365,28 +2336,19 @@
         encodeURIComponent(currentUser.nik);
     }
 
-
     document.getElementById('subPageTitle')
       .textContent = title;
-
     document.getElementById('progressBar')
       .style.display = 'block';
 
-
     const iframe =
       document.getElementById('subPageIframe');
-
     iframe.src = targetUrl;
-
 
     document.getElementById('subPageView')
       .classList.add('active');
-
-
     if (!isSubPageOpen) {
-
       isSubPageOpen = true;
-
       history.pushState(
         { subpageOpen: true },
         ''
@@ -2394,40 +2356,29 @@
     }
   }
 
-
   // ==========================================================
   // IFRAME SELESAI MEMUAT
   // ==========================================================
 
   function onIframeLoaded() {
-
     const progress =
       document.getElementById('progressBar');
-
     if (progress) {
       progress.style.display = 'none';
     }
   }
-
 
   // ==========================================================
   // TUTUP SUB-PAGE
   // ==========================================================
 
   function closeAppPage(fromPopState = false) {
-
     const subPage =
       document.getElementById('subPageView');
-
-
     if (!subPage.classList.contains('active')) {
       return;
     }
-
-
     subPage.classList.remove('active');
-
-
     setTimeout(function() {
 
       document.getElementById('subPageIframe')
@@ -2435,17 +2386,13 @@
 
     }, 350);
 
-
     if (isSubPageOpen) {
-
       isSubPageOpen = false;
-
       if (!fromPopState) {
         history.back();
       }
     }
   }
-
 
   // ==========================================================
   // BROWSER BACK
@@ -2454,11 +2401,8 @@
   window.addEventListener(
     'popstate',
     function() {
-
       if (isSubPageOpen) {
-
         closeAppPage(true);
-
       } else if (
         document.getElementById('dashboardView')
           .style.display === 'flex'
@@ -2472,15 +2416,12 @@
     }
   );
 
-
   // ==========================================================
   // ADMIN
   // ==========================================================
 
   function handleAdminClick() {
-
     if (currentUser.isAdmin) {
-
       openAppPage(
         'Admin',
         BASE_URLS.admin
@@ -2488,15 +2429,12 @@
     }
   }
 
-
   // ==========================================================
   // DATABASE
   // ==========================================================
 
   function handleDatabaseClick() {
-
     if (currentUser.isDatabaseUser) {
-
       openAppPage(
         'Database',
         BASE_URLS.database
@@ -2504,33 +2442,25 @@
     }
   }
 
-
   // ==========================================================
   // GALERI INFORMASI DATA
   // ==========================================================
 
   function loadProfilRTGallery() {
-
     callAPI(
       'profil',
       null,
-
       function(res) {
-
         if (!res || !res.success) {
-
           document.getElementById('imageGallery')
             .innerHTML =
             '<div class="loading-text" style="color:red;">Gagal memuat gambar</div>';
-
           return;
         }
-
         renderImageGallery(res.data || []);
       },
 
       function() {
-
         document.getElementById('imageGallery')
           .innerHTML =
           '<div class="loading-text" style="color:red;">Gagal memuat gambar</div>';
@@ -2540,28 +2470,19 @@
 
 
   function renderImageGallery(urls) {
-
     const container =
       document.getElementById('imageGallery');
 
-
     if (!urls || urls.length === 0) {
-
       container.innerHTML =
         '<div class="loading-text">Tidak ada informasi data ditemukan.</div>';
-
       return;
     }
 
-
     let htmlContent = '';
-
-
     urls.forEach(function(url, index) {
-
       htmlContent +=
         '<div class="gallery-card">';
-
       htmlContent +=
         '<img src="' +
         escapeHtml(url) +
@@ -2576,10 +2497,8 @@
         '</div>';
     });
 
-
     container.innerHTML = htmlContent;
   }
-
 
   // ==========================================================
   // GALERI STANDAR PELAYANAN
@@ -2592,14 +2511,12 @@
       null,
 
       function(res) {
-
         const container =
           document.getElementById('imageGallerySP');
 
         if (!container) {
           return;
         }
-
 
         if (!res || !res.success) {
 
@@ -2609,25 +2526,18 @@
           return;
         }
 
-
         const imageUrls =
           res.data || [];
 
-
         if (imageUrls.length === 0) {
-
           container.innerHTML =
             '<div class="loading-text">Tidak ada data standar pelayanan.</div>';
-
           return;
         }
 
-
         let html = '';
 
-
         imageUrls.forEach(function(url) {
-
           html +=
             '<div class="gallery-card-sp">' +
             '<img src="' +
@@ -2636,17 +2546,13 @@
             '</div>';
         });
 
-
         container.innerHTML = html;
       },
 
       function() {
-
         const container =
           document.getElementById('imageGallerySP');
-
         if (container) {
-
           container.innerHTML =
             '<div class="loading-text" style="color:red;">Gagal memuat gambar.</div>';
         }
@@ -2654,59 +2560,40 @@
     );
   }
 
-
   // ==========================================================
   // HEADER LOGIN
   // ==========================================================
 
   function loadLoginHeaderImage() {
-
     callAPI(
       'header',
       null,
-
       function(res) {
-
         if (!res || !res.success) {
           return;
         }
 
-
         const urls =
           res.data || [];
-
-
         if (urls.length === 0) {
           return;
         }
-
-
         const rawUrl =
           String(urls[0]).trim();
-
 
         if (!rawUrl) {
           return;
         }
 
-
         const imgEl =
           document.getElementById('loginHeaderImg');
-
         const containerEl =
           document.getElementById('loginHeaderContainer');
-
-
         if (!imgEl || !containerEl) {
           return;
         }
-
-
         imgEl.removeAttribute('src');
-
-
         let imageUrl = rawUrl;
-
         const separator =
           imageUrl.indexOf('?') >= 0
             ? '&'
@@ -2716,25 +2603,18 @@
           separator +
           'v=' +
           new Date().getTime();
-
-
         containerEl.style.display = 'none';
-
-
         imgEl.onload = function() {
           containerEl.style.display = 'block';
         };
-
 
         imgEl.onerror = function() {
           console.error(
             'Gambar header gagal dimuat:',
             rawUrl
           );
-
           containerEl.style.display = 'none';
         };
-
 
         imgEl.src = imageUrl;
       },
