@@ -696,14 +696,14 @@
     .bottom-navbar {
       position: fixed;
       left: 50%;
-      bottom: calc(12px + env(safe-area-inset-bottom));
+      bottom: calc(6px + env(safe-area-inset-bottom));
       transform: translateX(-50%);
-      width: calc(100% - 24px);
+      width: calc(100% - 12px);
       max-width: 960px;
       height: 68px;
       background: rgba(255,255,255,0.97);
       border-top: 1px solid #e2e8f0;
-      border-radius: 20px; /* Sudut melengkung di HP juga */
+      border-radius: 15px; /* Sudut melengkung di HP juga */
       box-shadow: 0 -6px 20px rgba(15,23,42,0.10);
       display: none;
       grid-template-columns: repeat(5,1fr);
@@ -772,7 +772,7 @@
 
     @media (min-width: 768px) {
       .bottom-navbar {
-        bottom: 20px;
+        bottom: 12px;
         border-radius: 18px;
         width: calc(100% - 40px);
       }
