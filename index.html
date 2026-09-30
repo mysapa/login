@@ -691,6 +691,86 @@
       right: -3px;
     }
 
+
+    /* ================= BOTTOM NAVBAR ================= */
+
+    .bottom-navbar {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 960px;
+      height: 68px;
+      background: rgba(255,255,255,0.97);
+      border-top: 1px solid #e2e8f0;
+      box-shadow: 0 -6px 20px rgba(15,23,42,0.10);
+      display: none;
+      grid-template-columns: repeat(5,1fr);
+      align-items: end;
+      padding: 6px 8px 5px;
+      z-index: 2100;
+      backdrop-filter: blur(10px);
+    }
+
+    .bottom-nav-item {
+      height: 56px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .bottom-nav-item i {
+      font-size: 19px;
+    }
+
+    .bottom-nav-item.active {
+      color: #00529c;
+    }
+
+    .bottom-nav-center {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#10b981 0%,#047857 100%);
+      color: #ffffff;
+      box-shadow: 0 7px 18px rgba(16,185,129,0.35);
+      border: 4px solid #f8fafc;
+      gap: 2px;
+    }
+
+    .bottom-nav-center i {
+      font-size: 21px;
+    }
+
+    .bottom-nav-center span {
+      font-size: 9px;
+      line-height: 1;
+    }
+
+    .dashboard-view {
+      padding-bottom: 88px;
+    }
+
+    @media (min-width: 768px) {
+      .bottom-navbar {
+        bottom: 20px;
+        border-radius: 18px;
+        width: calc(100% - 40px);
+      }
+    }
+
     /* SIDEBAR */
 
     .sidebar-backdrop {
@@ -1147,100 +1227,6 @@
       visibility: visible;
       transform: translateY(0);
     }
-  /* ================= BOTTOM NAVBAR ================= */
-.dashboard-view {
-  /* Ubah atau tambahkan padding-bottom agar footer/konten bawah tidak tertutup navbar */
-  padding-bottom: 85px !important; 
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 960px; /* Sesuai batas lebar app-container */
-  height: 62px;
-  background: #ffffff;
-  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.1);
-  display: none; /* Tersembunyi secara default (Termasuk Halaman Login) */
-  justify-content: space-around;
-  align-items: center;
-  z-index: 999;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 0 8px;
-}
-
-.bottom-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  text-decoration: none;
-  color: #64748b;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  background: none;
-  border: none;
-  transition: all 0.2s ease;
-  padding: 4px 0;
-}
-
-.bottom-nav-item i {
-  font-size: 18px;
-  margin-bottom: 3px;
-}
-
-.bottom-nav-item:active,
-.bottom-nav-item:hover {
-  color: #0284c7;
-}
-
-/* Khusus Tombol Exit */
-.bottom-nav-item.btn-nav-exit {
-  color: #ef4444;
-}
-
-/* Tombol Ke-3 (Surat Pengantar - Elevated FAB) */
-.bottom-nav-item.center-fab {
-  position: relative;
-  top: -18px;
-  flex: none;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #ffffff;
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 4px solid #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.bottom-nav-item.center-fab i {
-  font-size: 20px;
-  margin-bottom: 0;
-}
-
-.bottom-nav-item.center-fab span {
-  font-size: 8.5px;
-  font-weight: 800;
-  margin-top: 1px;
-  line-height: 1;
-}
-
-.bottom-nav-item.center-fab:hover,
-.bottom-nav-item.center-fab:active {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.55);
-  color: #ffffff;
-}
   </style>
 </head>
 
@@ -1692,6 +1678,36 @@
   </div>
 
 
+
+  <!-- ================= BOTTOM NAVBAR ================= -->
+
+  <nav id="bottomNavbar" class="bottom-navbar" aria-label="Navigasi utama">
+    <button class="bottom-nav-item active" onclick="bottomNavHome()">
+      <i class="fa-solid fa-house"></i>
+      <span>Beranda</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Surat</span>
+    </button>
+
+    <button class="bottom-nav-item bottom-nav-center" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>Ronda</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
+      <i class="fa-solid fa-id-badge"></i>
+      <span>Data</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
+      <i class="fa-solid fa-house-flag"></i>
+      <span>Profil</span>
+    </button>
+  </nav>
+
   <!-- ================= 3. SIDEBAR ================= -->
 
   <div
@@ -1806,41 +1822,9 @@
     </iframe>
 
   </div>
-  
-<!-- ================= BOTTOM NAVBAR ================= -->
-  <nav id="bottomNav" class="bottom-nav">
-    <!-- 1. Exit -->
-    <button class="bottom-nav-item btn-nav-exit" onclick="logout()" title="Keluar">
-      <i class="fa-solid fa-right-from-bracket"></i>
-      <span>Exit</span>
-    </button>
-    
-    <!-- 2. Data Pribadi -->
-    <button class="bottom-nav-item" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)" title="Data Pribadi">
-      <i class="fa-solid fa-id-badge"></i>
-      <span>Data Pribadi</span>
-    </button>
-    
-    <!-- 3. Surat Pengantar (Tombol Utama Elevated) -->
-    <button class="bottom-nav-item center-fab" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)" title="Surat Pengantar">
-      <i class="fa-solid fa-paper-plane"></i>
-      <span>Surat</span>
-    </button>
-
-    <!-- 4. Info Data -->
-    <button class="bottom-nav-item" onclick="openAppPage('Informasi Data', BASE_URLS.infoData)" title="Info Data">
-      <i class="fa-solid fa-chart-pie"></i>
-      <span>Info Data</span>
-    </button>
-    
-    <!-- 5. Profil RT -->
-    <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)" title="Profil RT">
-      <i class="fa-solid fa-house-flag"></i>
-      <span>Profil RT</span>
-    </button>
-  </nav>
 
 </div>
+
 
 <script>
   // ==========================================================
@@ -2156,24 +2140,16 @@
   // MASUK DASHBOARD
   // ==========================================================
 
-function enterDashboard() {
-  document.getElementById('loginView').style.display = 'none';
-  document.getElementById('dashboardView').style.display = 'flex';
-  
-  // TAMPILKAN BOTTOM NAVBAR
-  const bottomNav = document.getElementById('bottomNav');
-  if (bottomNav) bottomNav.style.display = 'flex';
+  function enterDashboard() {
 
-  document.getElementById('timeGreeting').textContent = getDynamicGreeting();
-  document.getElementById('dashUserName').textContent = currentUser.nama;
-  document.getElementById('visitorCountVal').textContent = currentUser.visitorCount;
-  setFormattedHeaderDate();
-  
     document.getElementById('loginView')
       .style.display = 'none';
 
     document.getElementById('dashboardView')
       .style.display = 'flex';
+
+    document.getElementById('bottomNavbar')
+      .style.display = 'grid';
 
 
     document.getElementById('timeGreeting')
@@ -2224,7 +2200,6 @@ function enterDashboard() {
       ''
     );
   }
-}
 
 
   // ==========================================================
@@ -2242,14 +2217,16 @@ function enterDashboard() {
       isDatabaseUser: false
     };
 
-const bottomNav = document.getElementById('bottomNav');
-  if (bottomNav) bottomNav.style.display = 'none';
+
     document.getElementById('nikInput').value = '';
 
     document.getElementById('loginError')
       .style.display = 'none';
 
     document.getElementById('dashboardView')
+      .style.display = 'none';
+
+    document.getElementById('bottomNavbar')
       .style.display = 'none';
 
     document.getElementById('loginView')
@@ -2304,6 +2281,17 @@ const bottomNav = document.getElementById('bottomNav');
 
   function closeSubpage() {
     closeAppPage();
+  }
+
+
+  // ==========================================================
+  // BOTTOM NAVBAR
+  // ==========================================================
+
+  function bottomNavHome() {
+    if (isSubPageOpen) {
+      closeAppPage();
+    }
   }
 
 
@@ -2758,44 +2746,32 @@ const bottomNav = document.getElementById('bottomNav');
     );
   }
 
-
   // ==========================================================
   // FORMAT URL GOOGLE DRIVE
   // ==========================================================
 
   function formatDriveImageUrl(url) {
-
     if (!url) {
       return '';
     }
-
-
     const match =
       url.match(/[-\w]{25,}/);
-
-
     if (match) {
-
       const fileId =
         match[0];
-
       return (
         'https://lh3.googleusercontent.com/d/' +
         fileId
       );
     }
-
-
     return url;
   }
-
 
   // ==========================================================
   // ESCAPE HTML
   // ==========================================================
 
   function escapeHtml(value) {
-
     return String(value)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -2804,76 +2780,52 @@ const bottomNav = document.getElementById('bottomNav');
       .replace(/'/g, '&#039;');
   }
 
-
   // ==========================================================
   // PANGGILAN DARURAT
   // ==========================================================
 
   function toggleEmergencyMenu() {
-
     const menu =
       document.getElementById('emergencyMenu');
-
     const arrow =
       document.getElementById('emergencyArrow');
-
-
     menu.classList.toggle('show');
-
     arrow.classList.toggle('open');
   }
-
 
   // ==========================================================
   // MENU LAINNYA
   // ==========================================================
 
   function toggleOtherFeatures() {
-
     const menu =
       document.getElementById('otherFeaturesMenu');
-
     const icon =
       document.getElementById('otherFeaturesIcon');
-
     const text =
       document.getElementById('otherFeaturesText');
-
-
     const isOpen =
       menu.classList.toggle('show');
-
-
-    icon.classList.toggle('open');
-
-
-    text.textContent =
-      isOpen
-        ? 'Sembunyikan'
-        : 'Lainnya';
+      icon.classList.toggle('open');
+      text.textContent =
+        isOpen
+          ? 'Sembunyikan'
+          : 'Lainnya';
   }
-
 
   // ==========================================================
   // INISIALISASI
   // ==========================================================
 
   setFormattedHeaderDate();
-
-
   document.addEventListener(
     'DOMContentLoaded',
     function() {
-
       loadProfilRTGallery();
-
       loadStandarPelayananGallery();
-
       loadLoginHeaderImage();
-
     }
   );
 </script>
-
 </body>
 </html>
