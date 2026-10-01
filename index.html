@@ -691,95 +691,118 @@
       right: -3px;
     }
 
-    /* ================= BOTTOM NAVBAR ================= */
+/* ================= BOTTOM NAVBAR ================= */
 
-    .bottom-navbar {
-      position: fixed;
-      left: 50%;
-      bottom: calc(0px + env(safe-area-inset-bottom)); /* jarak melayang */
-      transform: translateX(-50%);
-      width: calc(100% - 0px); /* lebar di HP */
-      max-width: 960px;
-      height: 68px;
-      background: rgba(255,255,255,0.97);
-      border-top: 1px solid #e2e8f0;
-      border-radius: 15px; /* Sudut melengkung di HP juga */
-      box-shadow: 0 -6px 20px rgba(15,23,42,0.10);
-      display: none;
-      grid-template-columns: repeat(5,1fr);
-      align-items: center;
-      padding: 6px 8px;
-      z-index: 2100;
-      backdrop-filter: blur(10px);
-      max-width: 960px;
-    }
+.bottom-navbar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(0px + env(safe-area-inset-bottom)); /* jarak melayang */
+  transform: translateX(-50%);
+  width: calc(100% - 0px); /* lebar di HP */
+  max-width: 960px;
+  height: 68px;
+  background: rgba(255,255,255,0.97);
+  border-top: 1px solid #e2e8f0;
+  border-radius: 15px; /* Sudut melengkung di HP juga */
+  box-shadow: 0 -6px 20px rgba(15,23,42,0.10);
+  display: none;
+  grid-template-columns: repeat(5,1fr);
+  align-items: center;
+  padding: 6px 8px;
+  z-index: 2100;
+  backdrop-filter: blur(10px);
+}
 
-    .bottom-nav-item {
-      height: 56px;
-      border: none;
-      background: transparent;
-      color: #334155;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      font-size: 11.5px;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 12px;
-      position: relative;
-    }
+.bottom-nav-item {
+  height: 56px;
+  border: none;
+  background: transparent;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 12px;
+  position: relative;
+  transition: color 0.2s ease;
+}
 
-    .bottom-nav-item i {
-      font-size: 19px;
-      color: #60a5fa;
-    }
+.bottom-nav-item i {
+  font-size: 19px;
+  color: #60a5fa;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
 
-    .bottom-nav-item.active {
-      color: #00529c;
-    }
+/* Status Aktif Tombol Navigasi */
+.bottom-nav-item.active {
+  color: #00529c;
+}
 
-    .bottom-nav-center {
-      width: 65px;
-      height: 65px;
-      margin: -34px auto 0;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1d4ed8 0%, #60a5fa 100%);
-      color: #ffffff;
-      box-shadow: 0 7px 18px rgba(16,185,129,0.35);
-      border: 4px solid #f8fafc;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      cursor: pointer;
-      position: relative;
-    }
-  
-    .bottom-nav-center i {
-      font-size: 18px;
-      color: #ffffff;
-    }
+.bottom-nav-item.active i {
+  color: #00529c;
+  transform: scale(1.12); /* Efek sedikit membesar saat dipilih */
+}
 
-    .bottom-nav-center span {
-      font-size: 11px;
-      line-height: 1;
-    }
+/* Tombol Exit / Logout Khusus */
+.bottom-nav-item.btn-nav-logout.active {
+  color: #ef4444;
+}
+.bottom-nav-item.btn-nav-logout.active i {
+  color: #ef4444;
+}
 
-    .dashboard-view {
-      padding-bottom: 96px;
-    }
+/* Tombol Tengah (MyData) */
+.bottom-nav-center {
+  width: 65px;
+  height: 65px;
+  margin: -34px auto 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1d4ed8 0%, #60a5fa 100%);
+  color: #ffffff;
+  box-shadow: 0 7px 18px rgba(16,185,129,0.35);
+  border: 4px solid #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    @media (min-width: 768px) {
-      .bottom-navbar {
-        bottom: 12px;
-        border-radius: 18px;
-        width: calc(100% - 40px);
-      }
-    }
+.bottom-nav-center i {
+  font-size: 18px;
+  color: #ffffff !important; /* Tetap putih */
+}
 
+.bottom-nav-center span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* Status Aktif khusus Tombol Tengah MyData */
+.bottom-nav-center.active {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  box-shadow: 0 8px 22px rgba(29, 78, 216, 0.5);
+  transform: translateY(-2px);
+}
+
+.dashboard-view {
+  padding-bottom: 96px;
+}
+
+@media (min-width: 768px) {
+  .bottom-navbar {
+    bottom: 12px;
+    border-radius: 18px;
+    width: calc(100% - 40px);
+  }
+}
     /* SIDEBAR */
 
     .sidebar-backdrop {
@@ -1238,7 +1261,6 @@
     }
   </style>
 </head>
-
 <body>
 
 <div class="app-container">
@@ -1256,9 +1278,7 @@
     </div>
 
     <div class="login-card">
-
       <div class="form-group">
-
         <div class="login-label-row">
           <label class="form-label" for="nikInput">
             <i class="fa-solid fa-lock"></i> Login
@@ -1276,7 +1296,6 @@
 
         <div class="input-wrapper">
           <i class="fa-solid fa-id-card"></i>
-
           <input
             type="number"
             id="nikInput"
@@ -1285,7 +1304,6 @@
             autocomplete="off"
             onkeypress="handleKeyPress(event)">
         </div>
-
       </div>
 
       <button id="btnLogin" class="btn-primary" onclick="processLogin()">
@@ -1315,7 +1333,6 @@
         </div>
         <i class="fa-solid fa-chevron-right"></i>
       </button>
-
     </div>
 
     <!-- PANGGILAN DARURAT -->
@@ -1327,12 +1344,10 @@
           <i class="fa-solid fa-phone-volume"></i>
           <span style="text-decoration:underline;">Panggilan Darurat</span>
         </div>
-
         <i id="emergencyArrow" class="fa-solid fa-chevron-down"></i>
       </div>
 
       <div id="emergencyMenu" class="emergency-menu">
-
         <a href="tel:110" class="menu-item" style="text-decoration:none;">
           <div class="menu-icon-box bg-polri">
             <img
@@ -1406,19 +1421,13 @@
   <!-- ================= 2. DASHBOARD ================= -->
 
   <div id="dashboardView" class="dashboard-view">
-
     <header class="dash-header">
-
       <div class="header-nav-bar">
-
         <div class="nav-left-brand">
-
           <div class="nav-btn-icon" onclick="toggleSidebar(true)">
             <i class="fa-solid fa-bars"></i>
           </div>
-
           <span class="app-version-tag">MySAPA</span>
-
         </div>
 
         <div class="header-user-profile">
@@ -1426,7 +1435,6 @@
             <i class="fas fa-power-off"></i>
           </button>
         </div>
-
       </div>
 
       <div class="dash-date-badge">
@@ -1435,37 +1443,27 @@
       </div>
 
       <div>
-
         <div class="greeting-subtitle" id="timeGreeting">
           Selamat Pagi,
         </div>
 
         <div class="user-name-row">
-
           <div class="user-name-display" id="dashUserName">
             Nama Warga
           </div>
-
           <button
             class="btn-data-pribadi-header"
             onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
             <i class="fa-solid fa-id-badge"></i>
             <span>Data Pribadi</span>
           </button>
-
         </div>
-
       </div>
-
     </header>
 
-
     <!-- SURAT PENGANTAR -->
-
     <section class="surat-card-floating">
-
       <div class="surat-card">
-
         <div class="surat-info">
           <div class="surat-title">Surat Pengantar RT</div>
           <div class="surat-desc">
@@ -1479,48 +1477,36 @@
           <i class="fa-solid fa-paper-plane"></i>
           <span>Ajukan Sekarang</span>
         </button>
-
       </div>
-
     </section>
-
 
     <!-- STANDAR PELAYANAN -->
 
     <div class="scroll-gallery-wrapper">
-
       <section class="menu-section">
-
         <div class="informasi-data-title">
-
           <div class="informasi-data-judul">
             <i class="fa-solid fa-file-contract" style="color:#0284c7;"></i>
             <span>Standar Pelayanan</span>
           </div>
 
         </div>
-
       </section>
-
+      
       <div id="imageGallerySP" class="scroll-gallery-container">
         <div class="loading-text">Memuat data...</div>
       </div>
-
     </div>
-
 
     <!-- FITUR UTAMA -->
 
     <section class="menu-section">
-
       <div class="section-title">
         <i class="fa-solid fa-hands-praying" style="color:#10b981;"></i>
         <span>Fitur Utama</span>
       </div>
 
-
       <div class="menu-grid">
-
         <div class="menu-item"
           onclick="openAppPage('Arsip dan Inventaris', BASE_URLS.arsip)">
           <div class="menu-icon-box bg-arsip menu-alert">
@@ -1558,9 +1544,7 @@
       <!-- MENU LAINNYA -->
 
       <div id="otherFeaturesMenu" class="other-features-menu">
-
         <div class="other-features-inner">
-
           <div class="menu-item"
             onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
             <div class="menu-icon-box bg-profil">
@@ -1618,30 +1602,21 @@
             </div>
             <span class="menu-label">Database</span>
           </div>
-
         </div>
-
       </div>
-
 
       <div class="other-features-header" onclick="toggleOtherFeatures()">
         <span id="otherFeaturesText">Lainnya</span>
         <i id="otherFeaturesIcon" class="fa-solid fa-chevron-down"></i>
       </div>
-
       <div class="section-divider-utama"></div>
-
     </section>
-
 
     <!-- INFORMASI DATA -->
 
     <div class="scroll-gallery-wrapper">
-
       <section class="menu-section informasi-data-section">
-
         <div class="informasi-data-title">
-
           <div class="informasi-data-judul">
             <i class="fa-solid fa-chart-pie" style="color:#0284c7;"></i>
             <span>Data Statistik</span>
@@ -1652,9 +1627,7 @@
             onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
             Lihat semua
           </div>
-
         </div>
-
       </section>
 
       <div id="imageGallery" class="scroll-gallery-container">
@@ -1685,37 +1658,60 @@
 
   </div>
 
+<!-- ================= BOTTOM NAVBAR ================= -->
 
+<nav id="bottomNavbar" class="bottom-navbar" aria-label="Navigasi utama">
+  <!-- 1. Logout -->
+  <button 
+    class="bottom-nav-item btn-nav-logout" 
+    data-icon-regular="fa-regular fa-circle-xmark" 
+    data-icon-solid="fa-solid fa-circle-xmark" 
+    onclick="logout()">
+    <i class="fa-regular fa-circle-xmark"></i>
+    <span>Logout</span>
+  </button>
+  
+  <!-- 2. Pengantar -->
+  <button 
+    class="bottom-nav-item" 
+    data-icon-regular="fa-regular fa-paper-plane" 
+    data-icon-solid="fa-solid fa-paper-plane" 
+    onclick="openNavPage(1, 'Surat Pengantar RT', BASE_URLS.ajukanSurat)">
+    <i class="fa-regular fa-paper-plane"></i>
+    <span>Pengantar</span>
+  </button>
 
-  <!-- ================= BOTTOM NAVBAR ================= -->
+  <!-- 3. MyData (Center FAB) -->
+  <button 
+    class="bottom-nav-item bottom-nav-center" 
+    data-icon-regular="fa-regular fa-id-badge" 
+    data-icon-solid="fa-solid fa-id-badge" 
+    onclick="openNavPage(2, 'Data Pribadi', BASE_URLS.dataPribadi)">
+    <i class="fa-regular fa-id-badge"></i>
+    <span>MyData</span>
+  </button>
 
-  <nav id="bottomNavbar" class="bottom-navbar" aria-label="Navigasi utama">
-    <button class="bottom-nav-item" onclick="logout()">
-      <i class="fas fa-power-off"></i>
-      <span>Logout</span>
-    </button>
-    
-    <button class="bottom-nav-item" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
-      <i class="fa-solid fa-paper-plane"></i>
-      <span>Pengantar</span>
-    </button>
+  <!-- 4. Statistik -->
+  <button 
+    class="bottom-nav-item" 
+    data-icon-regular="fa-regular fa-chart-bar" 
+    data-icon-solid="fa-solid fa-chart-pie" 
+    onclick="openNavPage(3, 'Data Statistik', BASE_URLS.infoData)">
+    <i class="fa-regular fa-chart-bar"></i>
+    <span>Statistik</span>
+  </button>
 
-    <button class="bottom-nav-item bottom-nav-center" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
-      <i class="fa-solid fa-id-badge"></i>
-      <span>MyData</span>
-    </button>
-
-    <button class="bottom-nav-item" onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
-      <i class="fa-solid fa-chart-pie"></i>
-      <span>Statistik</span>
-    </button>
-
-    <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
-      <i class="fa-solid fa-house-flag"></i>
-      <span>Profil</span>
-    </button>
-  </nav>
-
+  <!-- 5. Profil -->
+  <button 
+    class="bottom-nav-item" 
+    data-icon-regular="fa-regular fa-building" 
+    data-icon-solid="fa-solid fa-house-flag" 
+    onclick="openNavPage(4, 'Profil RT', BASE_URLS.profil)">
+    <i class="fa-regular fa-building"></i>
+    <span>Profil</span>
+  </button>
+</nav>
+  
   <!-- ================= 3. SIDEBAR ================= -->
 
   <div
@@ -2714,6 +2710,52 @@
       loadLoginHeaderImage();
     }
   );
+
+  // Fungsi untuk mengganti status aktif & ubah ikon (Outline <-> Solid)
+function setActiveNav(activeIndex) {
+  const items = document.querySelectorAll('#bottomNavbar .bottom-nav-item');
+  
+  items.forEach((item, index) => {
+    const icon = item.querySelector('i');
+    const regularIcon = item.getAttribute('data-icon-regular');
+    const solidIcon = item.getAttribute('data-icon-solid');
+
+    if (index === activeIndex) {
+      item.classList.add('active');
+      if (icon && solidIcon) icon.className = solidIcon; // Ganti ke Solid (Full warna)
+    } else {
+      item.classList.remove('active');
+      if (icon && regularIcon) icon.className = regularIcon; // Kembalikan ke Outline (Garis)
+    }
+  });
+}
+
+// Fungsi pembantu ketika tombol Navbar diklik
+function openNavPage(index, title, baseUrl) {
+  setActiveNav(index);
+  openAppPage(title, baseUrl);
+}
+
+// Pastikan pada fungsi enterDashboard() Navbar ditampilkan sebagai grid:
+function enterDashboard() {
+  document.getElementById('loginView').style.display = 'none';
+  document.getElementById('dashboardView').style.display = 'flex';
+
+  const bottomNav = document.getElementById('bottomNavbar');
+  if (bottomNav) bottomNav.style.display = 'grid'; // Gunakan grid sesuai CSS Bapak
+
+  // ... (sisa logika enterDashboard) ...
+}
+
+// Reset status navbar saat Logout
+function logout() {
+  setActiveNav(-1); // Hilangkan status active dari semua tombol
+  
+  const bottomNav = document.getElementById('bottomNavbar');
+  if (bottomNav) bottomNav.style.display = 'none';
+
+  // ... (sisa logika logout) ...
+}
 </script>
 </body>
 </html>
