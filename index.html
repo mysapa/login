@@ -2662,23 +2662,41 @@
     }
   );
 
-  // Fungsi untuk mengganti status aktif & ubah ikon (Outline <-> Solid)
-function setActiveNav(activeIndex) {
-  const items = document.querySelectorAll('#bottomNavbar .bottom-nav-item');
+function enterDashboard() {
+  document.getElementById('loginView').style.display = 'none';
+  document.getElementById('dashboardView').style.display = 'flex';
   
-  items.forEach((item, index) => {
-    const icon = item.querySelector('i');
-    const regularIcon = item.getAttribute('data-icon-regular');
-    const solidIcon = item.getAttribute('data-icon-solid');
+  // TAMPILKAN BOTTOM NAVBAR
+  const bottomNav = document.getElementById('bottomNav');
+  if (bottomNav) bottomNav.style.display = 'flex';
 
-    if (index === activeIndex) {
-      item.classList.add('active');
-      if (icon && solidIcon) icon.className = solidIcon; // Ganti ke Solid (Full warna)
-    } else {
-      item.classList.remove('active');
-      if (icon && regularIcon) icon.className = regularIcon; // Kembalikan ke Outline (Garis)
-    }
-  });
+  document.getElementById('timeGreeting').textContent = getDynamicGreeting();
+  document.getElementById('dashUserName').textContent = currentUser.nama;
+  document.getElementById('visitorCountVal').textContent = currentUser.visitorCount;
+  setFormattedHeaderDate(); 
+}
+
+function logout() {
+  currentUser = {
+    nik: '',
+    nama: '',
+    gender: '',
+    visitorCount: 1,
+    isAdmin: false,
+    isDatabaseUser: false
+  };
+
+  // SEMBUNYIKAN BOTTOM NAVBAR
+  const bottomNav = document.getElementById('bottomNav');
+  if (bottomNav) bottomNav.style.display = 'none';
+
+  document.getElementById('nikInput').value = '';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('dashboardView').style.display = 'none';
+  document.getElementById('loginView').style.display = 'flex';
+
+  closeAppPage(true);
+  toggleSidebar(false);
 }
 </script>
 </body>
