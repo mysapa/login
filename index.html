@@ -692,7 +692,10 @@
     }
 
     /* ================= BOTTOM NAVBAR ================= */
-
+    .dashboard-view {
+    /* Ubah atau tambahkan padding-bottom agar footer/konten bawah tidak tertutup navbar */
+      padding-bottom: 85px !important; 
+    }
     .bottom-navbar {
       position: fixed;
       left: 50%;
@@ -2116,9 +2119,7 @@
     document.getElementById('visitorCountVal')
       .textContent = currentUser.visitorCount;
 
-
     setFormattedHeaderDate();
-
 
     // ADMIN
     const adminBtns =
@@ -2134,7 +2135,6 @@
 
     });
 
-
     // DATABASE
     const databaseBtns =
       document.querySelectorAll('.database-btn-target');
@@ -2149,49 +2149,11 @@
 
     });
 
-
     history.pushState(
       { page: 'dashboard' },
       ''
     );
   }
-
-
-  // ==========================================================
-  // LOGOUT
-  // ==========================================================
-
-  function logout() {
-
-    currentUser = {
-      nik: '',
-      nama: '',
-      gender: '',
-      visitorCount: 1,
-      isAdmin: false,
-      isDatabaseUser: false
-    };
-
-
-    document.getElementById('nikInput').value = '';
-
-    document.getElementById('loginError')
-      .style.display = 'none';
-
-    document.getElementById('dashboardView')
-      .style.display = 'none';
-
-    document.getElementById('bottomNavbar')
-      .style.display = 'none';
-
-    document.getElementById('loginView')
-      .style.display = 'flex';
-
-
-    closeAppPage(true);
-    toggleSidebar(false);
-  }
-
 
   // ==========================================================
   // ABSEN RONDA DARI LOGIN
@@ -2201,27 +2163,19 @@
 
     const iframe =
       document.getElementById('subPageIframe');
-
     const progressBar =
       document.getElementById('progressBar');
-
-
-    document.getElementById('subPageTitle')
+      document.getElementById('subPageTitle')
       .innerText = 'Ronda Malam';
-
 
     if (progressBar) {
       progressBar.style.display = 'block';
     }
 
-
     iframe.src = BASE_URLS.ronda;
 
-
     if (!isSubPageOpen) {
-
       isSubPageOpen = true;
-
       history.pushState(
         { subpageOpen: true },
         ''
@@ -2235,13 +2189,12 @@
   function closeSubpage() {
     closeAppPage();
   }
-
+  
   // ==========================================================
   // SIDEBAR
   // ==========================================================
 
   function toggleSidebar(show) {
-
     const backdrop =
       document.getElementById('sidebarBackdrop');
     const panel =
@@ -2421,7 +2374,6 @@
       }
     );
   }
-
 
   function renderImageGallery(urls) {
     const container =
@@ -2676,28 +2628,28 @@ function enterDashboard() {
   setFormattedHeaderDate(); 
 }
 
-function logout() {
-  currentUser = {
-    nik: '',
-    nama: '',
-    gender: '',
-    visitorCount: 1,
-    isAdmin: false,
-    isDatabaseUser: false
-  };
+  // ==========================================================
+  // LOGOUT
+  // ==========================================================
 
-  // SEMBUNYIKAN BOTTOM NAVBAR
-  const bottomNav = document.getElementById('bottomNav');
-  if (bottomNav) bottomNav.style.display = 'none';
+   function logout() {
+    currentUser = {
+      nik: '',
+      nama: '',
+      gender: '',
+      visitorCount: 1,
+      isAdmin: false,
+      isDatabaseUser: false
+    };
 
-  document.getElementById('nikInput').value = '';
-  document.getElementById('loginError').style.display = 'none';
-  document.getElementById('dashboardView').style.display = 'none';
-  document.getElementById('loginView').style.display = 'flex';
-
-  closeAppPage(true);
-  toggleSidebar(false);
-}
+    document.getElementById('nikInput').value = '';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('bottomNavbar').style.display = 'none';
+    document.getElementById('loginView').style.display = 'flex';
+    closeAppPage(true);
+    toggleSidebar(false);
+  }
 </script>
 </body>
 </html>
