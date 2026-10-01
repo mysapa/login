@@ -790,6 +790,8 @@
   background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
   box-shadow: 0 8px 22px rgba(29, 78, 216, 0.5);
   transform: translateY(-2px);
+  color: #facc15;       /* Warna kuning terang (Tailwind Yellow-400) */
+  font-weight: 800;     /* Opsional: mempertegas teks saat aktif */
 }
 
 .dashboard-view {
@@ -1664,10 +1666,8 @@
   <!-- 1. Logout -->
   <button 
     class="bottom-nav-item btn-nav-logout" 
-    data-icon-regular="fa-regular fa-circle-xmark" 
-    data-icon-solid="fa-solid fa-circle-xmark" 
     onclick="logout()">
-    <i class="fa-regular fa-circle-xmark"></i>
+    <i class="fas fa-power-off"></i>
     <span>Logout</span>
   </button>
   
@@ -1694,7 +1694,7 @@
   <!-- 4. Statistik -->
   <button 
     class="bottom-nav-item" 
-    data-icon-regular="fa-regular fa-chart-bar" 
+    data-icon-regular="fa-regular fa-chart-pie" 
     data-icon-solid="fa-solid fa-chart-pie" 
     onclick="openNavPage(3, 'Data Statistik', BASE_URLS.infoData)">
     <i class="fa-regular fa-chart-bar"></i>
@@ -1704,7 +1704,7 @@
   <!-- 5. Profil -->
   <button 
     class="bottom-nav-item" 
-    data-icon-regular="fa-regular fa-building" 
+    data-icon-regular="fa-regular fa-house-flag" 
     data-icon-solid="fa-solid fa-house-flag" 
     onclick="openNavPage(4, 'Profil RT', BASE_URLS.profil)">
     <i class="fa-regular fa-building"></i>
