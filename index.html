@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js untuk Diagram Pie Polling -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -47,7 +50,6 @@
         overflow: hidden;
       }
     }
-
     /* ================= 1. HALAMAN LOGIN ================= */
     .login-view {
       padding: 0;
@@ -267,7 +269,6 @@
       justify-content: center;
       font-size: 14px;
     }
-
     /* ================= 2. DASHBOARD UTAMA ================= */
     .dashboard-view {
       display: none;
@@ -452,7 +453,6 @@
       border: none;
       white-space: nowrap;
     }
-
     /* MENU UTAMA */
     .menu-section {
       padding: 0 20px;
@@ -574,6 +574,7 @@
     .bg-dbase { background:#cffaff; color:#0891b2; }
     .bg-pbb { background:#d1fae5; color:#059669; }
     .bg-tanya { background:#ffedd5; color:#ea580c; }
+    .bg-polling { background:#e0f2fe; color:#0284c7; }
     .bg-pemkot { background:#e0f2fe; color:#0284c7; }
     .bg-polri { background:#fef3c7; color:#d97706; }
     .bg-pln { background:#fef9c3; color:#ca8a04; }
@@ -604,16 +605,111 @@
       justify-content: center;
       border: 2px solid #ffffff;
     }
-    .menu-alert::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: #ef4444;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      top: -3px;
-      right: -3px;
+
+    /* SUBFORM POLLING STYLES */
+    .polling-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .polling-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .poll-desc-box {
+      background: #f8fafc;
+      border-left: 4px solid #0284c7;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #334155;
+      margin-bottom: 14px;
+      white-space: pre-wrap;
+    }
+    .poll-alert {
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .poll-alert-info { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .poll-alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .poll-alert-danger { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+    .poll-options-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .btn-vote {
+      padding: 12px 8px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-vote-setuju { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .btn-vote-setuju:hover:not(:disabled) { background: #bbf7d0; transform: translateY(-2px); }
+    .btn-vote-tidak { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .btn-vote-tidak:hover:not(:disabled) { background: #fecaca; transform: translateY(-2px); }
+    .btn-vote-abstain { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+    .btn-vote-abstain:hover:not(:disabled) { background: #fde68a; transform: translateY(-2px); }
+    .btn-vote:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+      transform: none !important;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      margin: 10px 0;
+    }
+
+    /* ADMIN FORM STYLES */
+    .form-label-sm {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+    }
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: #0284c7;
+      cursor: pointer;
     }
 
     /* ================= BOTTOM NAVBAR ================= */
@@ -790,7 +886,6 @@
       justify-content: center;
       gap: 10px;
     }
-
     /* SUB-PAGE */
     .subpage-view {
       position: fixed;
@@ -806,28 +901,6 @@
     }
     .subpage-view.active {
       transform: translateX(0);
-    }
-    .progress-bar-container {
-      width: 100%;
-      height: 4px;
-      background: rgba(255,255,255,0.2);
-      position: relative;
-      overflow: hidden;
-      display: none;
-    }
-    .progress-bar-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background: linear-gradient(90deg,#38bdf8,#818cf8);
-      width: 0%;
-      animation: progressAnim 1.2s infinite ease-in-out;
-    }
-    @keyframes progressAnim {
-      0% { left:-40%; width:40%; }
-      50% { left:20%; width:60%; }
-      100% { left:100%; width:100%; }
     }
     .subpage-header {
       height: 60px;
@@ -866,25 +939,18 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .subpage-iframe {
-      width: 100%;
-      height: calc(100% - 60px);
-      border: none;
-      background: #ffffff;
+    .subpage-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      background: #f8fafc;
     }
-
     /* FOOTER */
     .app-footer {
       margin-top: 12px;
       padding: 12px 20px;
       text-align: center;
       background: none;
-    }
-    .login-view .app-footer {
-      margin-top: 10px !important;
-      padding: 0 20px 16px;
-      text-align: center;
-      transition: margin-top 0.35s ease;
     }
     .visitor-badge {
       display: inline-flex;
@@ -915,203 +981,26 @@
       0% { transform:rotate(0deg); }
       100% { transform:rotate(360deg); }
     }
-
-    /* GALERI */
-    .scroll-gallery-wrapper {
-      width: 100%;
-      margin: 12px 0;
-    }
-    .informasi-data-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      padding-bottom: 2px;
-    }
-    .informasi-data-judul {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .informasi-data-link {
-      font-size: 14px;
-      font-weight: 600;
-      color: #007bff;
-      cursor: pointer;
-    }
-    .informasi-data-section,
-    .scroll-gallery-wrapper {
-      padding-top: 0 !important;
-    }
-    .informasi-data-section {
-      margin-top: 0 !important;
-    }
-    .scroll-gallery-container {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 8px;
-      padding: 4px 0;
-      background: transparent;
-      border: none;
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      margin-top: 4px;
-    }
-    .scroll-gallery-container::before,
-    .scroll-gallery-container::after {
-      content: "";
-      flex: 0 0 12px;
-    }
-    .scroll-gallery-container::-webkit-scrollbar {
-      display: none;
-    }
-    .gallery-card {
-      flex: 0 0 auto;
-      width: 200px;
-      height: 160px;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #f0f0f0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .gallery-card img,
-    .gallery-card-sp img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-card-sp {
-      flex: 0 0 auto;
-      width: 270px;
-      height: 90px;
-      border-radius: 15px;
-      overflow: hidden;
-      background: #f0f0f0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .loading-text {
-      font-size: 11px;
-      color: #888;
-      padding: 8px 0;
-    }
-    .section-divider {
-      height: 6px;
-      background-color: #e2e8f0;
-      border: none;
-      margin: 12px -16px;
-      width: auto;
-    }
-    .section-divider-utama {
-      height: 6px;
-      background-color: #e2e8f0;
-      border: none;
-      margin: 12px -16px;
-      width: auto;
-      transition: margin-top 0.35s ease;
-    }
-    @media (min-width: 768px) {
-      .section-divider,
-      .section-divider-utama {
-        margin-left: -24px;
-        margin-right: -24px;
-      }
-    }
-
-    /* HEADER LOGIN */
-    .login-header-banner {
-      position: relative;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      margin: 0;
-      padding: 0;
-      border-radius: 0;
-      overflow: hidden;
-      display: none;
-      z-index: 1;
-    }
-    .login-header-banner img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: fill;
-      object-position: center center;
-    }
-
-    /* PANGGILAN DARURAT */
-    .emergency-section {
-      width: 100%;
-      margin: 4px 0 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    .emergency-header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 8px 4px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .emergency-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #dc2626;
-    }
-    .emergency-title i {
-      color: #dc2626;
-      font-size: 14px;
-    }
-    #emergencyArrow {
-      color: #dc2626;
-      font-size: 14px;
-      font-weight: 700;
-      transition: transform 0.25s ease;
-    }
-    #emergencyArrow.open {
-      transform: rotate(180deg);
-    }
-    .emergency-menu {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition:
-        grid-template-rows 0.35s cubic-bezier(0.4,0,0.2,1),
-        opacity 0.35s ease;
-      overflow: hidden;
-      opacity: 0;
-    }
-    .emergency-menu.show {
-      grid-template-rows: 1fr;
-      opacity: 1;
-    }
-    .emergency-menu-inner {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 4px;
-      width: 100%;
-      padding: 8px 8px 2px;
-    }
+    /* GALERI & SCROLL */
+    .scroll-gallery-wrapper { width: 100%; margin: 12px 0; }
+    .informasi-data-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .informasi-data-judul { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #0f172a; }
+    .informasi-data-link { font-size: 14px; font-weight: 600; color: #007bff; cursor: pointer; }
+    .scroll-gallery-container { display: flex; flex-direction: row; overflow-x: auto; gap: 8px; padding: 4px 0; scrollbar-width: none; }
+    .scroll-gallery-container::-webkit-scrollbar { display: none; }
+    .gallery-card { flex: 0 0 auto; width: 200px; height: 160px; border-radius: 10px; overflow: hidden; background: #f0f0f0; }
+    .gallery-card img, .gallery-card-sp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-card-sp { flex: 0 0 auto; width: 270px; height: 90px; border-radius: 15px; overflow: hidden; background: #f0f0f0; }
+    .loading-text { font-size: 11px; color: #888; padding: 8px 0; }
+    .section-divider-utama { height: 6px; background-color: #e2e8f0; border: none; margin: 12px -16px; }
   </style>
 </head>
 <body>
 <div class="app-container">
+
   <!-- ================= 1. HALAMAN LOGIN ================= -->
   <div id="loginView" class="login-view">
-    <div id="loginHeaderContainer" class="login-header-banner">
+    <div id="loginHeaderContainer" class="login-header-banner" style="display:none;">
       <img id="loginHeaderImg" src="" alt="Header Login">
     </div>
     <div class="welcome-text-medium">
@@ -1123,24 +1012,13 @@
           <label class="form-label" for="nikInput">
             <i class="fa-solid fa-lock"></i> Login
           </label>
-          <button
-            type="button"
-            class="btn-login-faq"
-            onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)"
-            title="FAQ"
-            aria-label="FAQ">
+          <button type="button" class="btn-login-faq" onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)" title="FAQ">
             <i class="fa-solid fa-circle-question"></i>
           </button>
         </div>
         <div class="input-wrapper">
           <i class="fa-solid fa-id-card"></i>
-          <input
-            type="number"
-            id="nikInput"
-            class="form-control"
-            placeholder="Ketik 16 digit NIK Anda"
-            autocomplete="off"
-            onkeypress="handleKeyPress(event)">
+          <input type="number" id="nikInput" class="form-control" placeholder="Ketik 16 digit NIK Anda" autocomplete="off" onkeypress="handleKeyPress(event)">
         </div>
       </div>
       <button id="btnLogin" class="btn-primary" onclick="processLogin()">
@@ -1153,98 +1031,22 @@
         <span id="errorMsg">NIK tidak ditemukan.</span>
       </div>
       <div class="login-divider">
-        <span>
-          <i class="fa-solid fa-bolt"></i>
-          Quick Access
-        </span>
+        <span><i class="fa-solid fa-bolt"></i> Quick Access</span>
       </div>
       <button class="btn-absen-ronda" onclick="openAbsenRondaDirect()">
         <div class="ronda-btn-left">
-          <div class="ronda-icon-glow">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
+          <div class="ronda-icon-glow"><i class="fa-solid fa-shield-halved"></i></div>
           <span>Absen Ronda Malam</span>
         </div>
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
     
-    <!-- PANGGILAN DARURAT & FOOTER -->
-    <section class="emergency-section">
-      <div class="emergency-header" onclick="toggleEmergencyMenu()">
-        <div class="emergency-title">
-          <i class="fa-solid fa-phone-volume"></i>
-          <span style="text-decoration:underline;">Panggilan Darurat</span>
-        </div>
-        <i id="emergencyArrow" class="fa-solid fa-chevron-down"></i>
+    <footer class="app-footer">
+      <div class="footer-copy">
+        Powered by <strong>Anto</strong> Design Concept &copy; 2026
       </div>
-      <div id="emergencyMenu" class="emergency-menu">
-        <div class="emergency-menu-inner">
-          <a href="tel:110" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-polri">
-              <img
-                src="https://drive.google.com/thumbnail?id=1fx4m8s6V8xVdJA88ZitWnrqGuQn4T5Lf"
-                alt="Polresta Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-shield-cat" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Polres</span>
-          </a>
-          <a href="tel:0401123" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-pln">
-              <img
-                src="https://drive.google.com/thumbnail?id=1wZjFl1ZPyuNYbqJg7bBnTEjpHashH3WR"
-                alt="PLN Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-bolt" style="display:none;"></i>
-            </div>
-            <span class="menu-label">PLN</span>
-          </a>
-          <a href="tel:112" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-pemkot">
-              <img
-                src="https://drive.google.com/thumbnail?id=1RBXqK7wF1Ht60-KArWBfcDXGYTAllPgL"
-                alt="Pemkot Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-building-flag" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Pemkot</span>
-          </a>
-          <a href="https://wa.me/" target="_blank"
-            class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-damkar">
-              <img
-                src="https://drive.google.com/thumbnail?id=1dndffo1XK-ETrpCFw2wWK82vMtOHmh98"
-                alt="Damkar Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-fire-extinguisher" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Damkar</span>
-          </a>
-          <a href="tel:6282311173113"
-            class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-ambulans">
-              <img
-                src="https://drive.google.com/thumbnail?id=1kkgUs6iGCFCx0LvvU6nDKGB1nrE2fNtV"
-                alt="Ambulans ASR"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-truck-medical" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Ambulans</span>
-          </a>
-        </div>
-      </div>
-      <footer class="app-footer">
-        <div class="footer-copy">
-          Powered by <strong>Anto</strong> Design Concept &copy; 2026
-        </div>
-      </footer>
-    </section>
+    </footer>
   </div>
 
   <!-- ================= 2. DASHBOARD ================= -->
@@ -1252,15 +1054,11 @@
     <header class="dash-header">
       <div class="header-nav-bar">
         <div class="nav-left-brand">
-          <div class="nav-btn-icon" onclick="toggleSidebar(true)">
-            <i class="fa-solid fa-bars"></i>
-          </div>
+          <div class="nav-btn-icon" onclick="toggleSidebar(true)"><i class="fa-solid fa-bars"></i></div>
           <span class="app-version-tag">MySAPA</span>
         </div>
         <div class="header-user-profile">
-          <button class="btn-exit" onclick="logout()">
-            <i class="fas fa-power-off"></i>
-          </button>
+          <button class="btn-exit" onclick="logout()"><i class="fas fa-power-off"></i></button>
         </div>
       </div>
       <div class="dash-date-badge">
@@ -1268,18 +1066,11 @@
         <span id="currentDateText">Minggu, 6 September 2026</span>
       </div>
       <div>
-        <div class="greeting-subtitle" id="timeGreeting">
-          Selamat Pagi,
-        </div>
+        <div class="greeting-subtitle" id="timeGreeting">Selamat Pagi,</div>
         <div class="user-name-row">
-          <div class="user-name-display" id="dashUserName">
-            Nama Warga
-          </div>
-          <button
-            class="btn-data-pribadi-header"
-            onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
-            <i class="fa-solid fa-id-badge"></i>
-            <span>Data Pribadi</span>
+          <div class="user-name-display" id="dashUserName">Nama Warga</div>
+          <button class="btn-data-pribadi-header" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
+            <i class="fa-solid fa-id-badge"></i><span>Data Pribadi</span>
           </button>
         </div>
       </div>
@@ -1290,34 +1081,13 @@
       <div class="surat-card">
         <div class="surat-info">
           <div class="surat-title">Surat Pengantar RT</div>
-          <div class="surat-desc">
-            Saatnya pengajuan surat dilakukan secara online, mandiri, dan cepat.
-          </div>
+          <div class="surat-desc">Saatnya pengajuan surat dilakukan secara online, mandiri, dan cepat.</div>
         </div>
-        <button
-          class="btn-ajukan"
-          onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
-          <i class="fa-solid fa-paper-plane"></i>
-          <span>Ajukan Sekarang</span>
+        <button class="btn-ajukan" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
+          <i class="fa-solid fa-paper-plane"></i><span>Ajukan Sekarang</span>
         </button>
       </div>
     </section>
-
-    <!-- STANDAR PELAYANAN -->
-    <div class="scroll-gallery-wrapper">
-      <section class="menu-section">
-        <div class="informasi-data-title">
-          <div class="informasi-data-judul">
-            <i class="fa-solid fa-file-contract" style="color:#0284c7;"></i>
-            <span>Standar Pelayanan</span>
-          </div>
-        </div>
-      </section>
-      
-      <div id="imageGallerySP" class="scroll-gallery-container">
-        <div class="loading-text">Memuat data...</div>
-      </div>
-    </div>
 
     <!-- FITUR UTAMA -->
     <section class="menu-section">
@@ -1326,96 +1096,46 @@
         <span>Fitur Utama</span>
       </div>
       <div class="menu-grid">
-        <div class="menu-item"
-          onclick="openAppPage('Arsip dan Inventaris', BASE_URLS.arsip)">
-          <div class="menu-icon-box bg-arsip">
-            <i class="fa-solid fa-box-archive"></i>
+        <!-- TOMBOL POLLING (SYARAT 1, 2, 3) -->
+        <div id="btnPolling" class="menu-item disabled" onclick="openPollingSubform()">
+          <div class="menu-icon-box bg-polling">
+            <i class="fa-solid fa-square-poll-vertical"></i>
           </div>
+          <span class="menu-label">Polling</span>
+        </div>
+
+        <div class="menu-item" onclick="openAppPage('Arsip dan Inventaris', BASE_URLS.arsip)">
+          <div class="menu-icon-box bg-arsip"><i class="fa-solid fa-box-archive"></i></div>
           <span class="menu-label">Arsip & Inventaris</span>
         </div>
-        <div class="menu-item"
-          onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
-          <div class="menu-icon-box bg-ronda">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
+        <div class="menu-item" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
+          <div class="menu-icon-box bg-ronda"><i class="fa-solid fa-shield-halved"></i></div>
           <span class="menu-label">Ronda Malam</span>
         </div>
-        <div class="menu-item"
-          onclick="openAppPage('Program Kerja', BASE_URLS.programKerja)">
-          <div class="menu-icon-box bg-program">
-            <i class="fa-solid fa-clipboard-list"></i>
-          </div>
+        <div class="menu-item" onclick="openAppPage('Program Kerja', BASE_URLS.programKerja)">
+          <div class="menu-icon-box bg-program"><i class="fa-solid fa-clipboard-list"></i></div>
           <span class="menu-label">Program Kerja</span>
-        </div>
-        <div class="menu-item"
-          onclick="openAppPage('Informasi Aktual', BASE_URLS.infoAktual)">
-          <div class="menu-icon-box bg-tanya menu-alert">
-            <i class="fa-solid fa-bell"></i>
-          </div>
-          <span class="menu-label">Info Aktual</span>
         </div>
       </div>
 
       <!-- MENU LAINNYA -->
       <div id="otherFeaturesMenu" class="other-features-menu">
         <div class="other-features-inner">
-          <div class="menu-item"
-            onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
-            <div class="menu-icon-box bg-profil">
-              <i class="fa-solid fa-id-badge"></i>
-            </div>
+          <div class="menu-item" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
+            <div class="menu-icon-box bg-profil"><i class="fa-solid fa-id-badge"></i></div>
             <span class="menu-label">Data Pribadi</span>
           </div>
-          <div class="menu-item"
-            onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
-            <div class="menu-icon-box bg-info-data">
-              <i class="fa-solid fa-chart-pie"></i>
-            </div>
+          <div class="menu-item" onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
+            <div class="menu-icon-box bg-info-data"><i class="fa-solid fa-chart-pie"></i></div>
             <span class="menu-label">Data Statistik</span>
           </div>
-          <div class="menu-item"
-            onclick="openAppPage('Surat Pengantar', BASE_URLS.ajukanSurat)">
-            <div class="menu-icon-box bg-pbb">
-              <i class="fa-solid fa-paper-plane"></i>
-            </div>
-            <span class="menu-label">Surat Pengantar</span>
-          </div>
-          <div class="menu-item"
-            onclick="openAppPage('Profil RT', BASE_URLS.profil)">
-            <div class="menu-icon-box bg-profil">
-              <i class="fa-solid fa-house-flag"></i>
-            </div>
+          <div class="menu-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
+            <div class="menu-icon-box bg-profil"><i class="fa-solid fa-house-flag"></i></div>
             <span class="menu-label">Profil RT</span>
           </div>
-          <div class="menu-item"
-            onclick="openAppPage('Bayar PBB', BASE_URLS.pbb)">
-            <div class="menu-icon-box bg-pbb">
-              <i class="fa-solid fa-money-bill-wave"></i>
-            </div>
-            <span class="menu-label">e-PBB</span>
-          </div>
-          <div id="btnAdmin"
-            class="menu-item admin-btn-target disabled"
-            onclick="handleAdminClick()">
-            <div class="menu-icon-box bg-admin">
-              <i class="fa-solid fa-user-gear"></i>
-            </div>
+          <div id="btnAdmin" class="menu-item admin-btn-target disabled" onclick="handleAdminClick()">
+            <div class="menu-icon-box bg-admin"><i class="fa-solid fa-user-gear"></i></div>
             <span class="menu-label">Admin</span>
-          </div>
-          <div id="btnDatabase"
-            class="menu-item database-btn-target disabled"
-            onclick="handleDatabaseClick()">
-            <div class="menu-icon-box bg-dbase">
-              <i class="fa-solid fa-database"></i>
-            </div>
-            <span class="menu-label">Database</span>
-          </div>
-          <div class="menu-item"
-            onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)">
-            <div class="menu-icon-box bg-tanya">
-              <i class="fa-solid fa-comments"></i>
-            </div>
-            <span class="menu-label">Tanya Jawab</span>
           </div>
         </div>
       </div>
@@ -1426,825 +1146,445 @@
       <div class="section-divider-utama"></div>
     </section>
 
-    <!-- INFORMASI DATA -->
-    <div class="scroll-gallery-wrapper">
-      <section class="menu-section informasi-data-section">
-        <div class="informasi-data-title">
-          <div class="informasi-data-judul">
-            <i class="fa-solid fa-chart-pie" style="color:#0284c7;"></i>
-            <span>Data Statistik</span>
-          </div>
-          <div
-            class="informasi-data-link"
-            onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
-            Lihat semua
-          </div>
-        </div>
-      </section>
-      <div id="imageGallery" class="scroll-gallery-container">
-        <div class="loading-text">Memuat data...</div>
-      </div>
-    </div>
-    <div class="section-divider"></div>
     <footer class="app-footer">
       <div class="visitor-badge">
         <i class="fa-solid fa-users"></i>
-        <span>
-          Pengunjung hari ini:
-          <strong id="visitorCountVal">1</strong>
-        </span>
+        <span>Pengunjung hari ini: <strong id="visitorCountVal">1</strong></span>
       </div>
-      <div class="footer-copy">
-        Powered by Anto Design Concept &copy; 2026
-      </div>
+      <div class="footer-copy">Powered by Anto Design Concept &copy; 2026</div>
     </footer>
   </div>
 
-  <!-- ================= BOTTOM NAVBAR ================= -->
-  <nav id="bottomNavbar" class="bottom-navbar" aria-label="Navigasi utama">
-    <button class="bottom-nav-item" onclick="logout()">
-      <i class="fas fa-power-off"></i>
-      <span>Logout</span>
-    </button>
-    <button class="bottom-nav-item" onclick="openAppPage('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
-      <i class="fa-solid fa-paper-plane"></i>
-      <span>Pengantar</span>
-    </button>
-    <button class="bottom-nav-item bottom-nav-center" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
-      <i class="fa-solid fa-id-badge"></i>
-      <span>MyData</span>
-    </button>
-    <button class="bottom-nav-item" onclick="openAppPage('Data Statistik', BASE_URLS.infoData)">
-      <i class="fa-solid fa-chart-pie"></i>
-      <span>Statistik</span>
-    </button>
-    <button class="bottom-nav-item" onclick="openAppPage('Profil RT', BASE_URLS.profil)">
-      <i class="fa-solid fa-house-flag"></i>
-      <span>Profil</span>
-    </button>
-  </nav>
+  <!-- ================= 3. SUBPAGE POLLING ================= -->
+  <div id="pollingSubpage" class="subpage-view">
+    <div class="subpage-header">
+      <button class="btn-subpage-back" onclick="closePollingSubform()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <div class="subpage-title">Polling Aspirasi Warga</div>
+    </div>
+    <div class="subpage-body">
 
-  <!-- ================= 3. SIDEBAR ================= -->
-  <div
-    id="sidebarBackdrop"
-    class="sidebar-backdrop"
-    onclick="toggleSidebar(false)">
+      <!-- SUBFORM FOR ADMIN (NIK 7471091606790001) -->
+      <div id="adminPollingFormCard" class="polling-card" style="display:none; border-left: 4px solid #e11d48;">
+        <div class="polling-title" style="color:#e11d48;">
+          <i class="fa-solid fa-user-gear"></i> Pengaturan Polling (Khusus Admin)
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label class="form-label-sm" for="adminPollDesc">Deskripsi Polling (Maksimal 1000 Karakter):</label>
+          <textarea id="adminPollDesc" class="form-control" style="height:90px; padding:10px; font-size:13px;" maxlength="1000" oninput="updateCharCount()"></textarea>
+          <div style="font-size:11px; text-align:right; color:#64748b; margin-top:2px;" id="charCountText">0 / 1000</div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label class="form-label-sm" for="adminPollDeadline">Batas Waktu Polling:</label>
+          <input type="datetime-local" id="adminPollDeadline" class="form-control" style="padding:8px 12px; font-size:13px;">
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="adminPollAktif">
+          <span>aktifkan polling</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="adminPollHasil">
+          <span>aktifkan hasil</span>
+        </label>
+        <button class="btn-primary" style="margin-top:14px; padding:10px; font-size:13px;" onclick="saveAdminPolling()">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Polling
+        </button>
+      </div>
+
+      <!-- SUBFORM USER POLLING -->
+      <div class="polling-card">
+        <div class="polling-title">
+          <i class="fa-solid fa-circle-question" style="color:#0284c7;"></i> Pertanyaan Polling
+        </div>
+        <div class="poll-desc-box" id="userPollDesc">
+          Memuat pertanyaan polling...
+        </div>
+
+        <!-- PERINGATAN BEDA KK / STATUS -->
+        <div id="pollAlertBox" class="poll-alert poll-alert-warning">
+          <i class="fa-solid fa-circle-info"></i>
+          <span id="pollAlertText">Silakan memberikan pendapat mewakili keluarga Anda</span>
+        </div>
+
+        <!-- TOMBOL JAWABAN (SETUJU, TIDAK SETUJU, ABSTAIN) -->
+        <div class="poll-options-grid">
+          <button id="btnVoteSetuju" class="btn-vote btn-vote-setuju" onclick="submitUserOpinion('Setuju')">
+            <i class="fa-solid fa-thumbs-up" style="font-size:18px;"></i>
+            <span>Setuju</span>
+          </button>
+          <button id="btnVoteTidak" class="btn-vote btn-vote-tidak" onclick="submitUserOpinion('Tidak Setuju')">
+            <i class="fa-solid fa-thumbs-down" style="font-size:18px;"></i>
+            <span>Tidak Setuju</span>
+          </button>
+          <button id="btnVoteAbstain" class="btn-vote btn-vote-abstain" onclick="submitUserOpinion('Abstain')">
+            <i class="fa-solid fa-minus" style="font-size:18px;"></i>
+            <span>Abstain</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- INFOGRAFIS HASIL POLLING (DIAGRAM PIE) -->
+      <div id="resultCard" class="polling-card">
+        <div class="polling-title">
+          <i class="fa-solid fa-chart-pie" style="color:#10b981;"></i> Infografis Hasil Polling
+        </div>
+        <div id="chartHolder" class="chart-container">
+          <canvas id="pollingPieChart"></canvas>
+        </div>
+        <div id="resultHiddenMsg" style="display:none; text-align:center; font-size:12px; color:#64748b; padding:15px;">
+          <i class="fa-solid fa-eye-slash"></i> Hasil polling disembunyikan oleh admin.
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <!-- SIDEBAR BACKDROP & PANEL -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
   <div id="sidebarPanel" class="sidebar-panel">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        Menu Utama
-      </div>
-      <div class="nav-btn-icon" onclick="toggleSidebar(false)">
-        <i class="fa-solid fa-xmark"></i>
-      </div>
+      <div class="sidebar-title">Menu Utama</div>
+      <div class="nav-btn-icon" onclick="toggleSidebar(false)"><i class="fa-solid fa-xmark"></i></div>
     </div>
     <div class="sidebar-content">
       <ul class="sidebar-menu-list">
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Data Pribadi', BASE_URLS.dataPribadi)">
-          <i class="fa-solid fa-id-badge" style="color:#0284c7;"></i>
-          Data Pribadi
+        <li class="sidebar-menu-item" onclick="openAppFromSidebar('Data Pribadi', BASE_URLS.dataPribadi)">
+          <i class="fa-solid fa-id-badge" style="color:#0284c7;"></i> Data Pribadi
         </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
-          <i class="fa-solid fa-paper-plane" style="color:#10b981;"></i>
-          Surat Pengantar
+        <li class="sidebar-menu-item" onclick="openAppFromSidebar('Surat Pengantar RT', BASE_URLS.ajukanSurat)">
+          <i class="fa-solid fa-paper-plane" style="color:#10b981;"></i> Surat Pengantar
         </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Data Statistik', BASE_URLS.infoData)">
-          <i class="fa-solid fa-chart-pie" style="color:#0284c7;"></i>
-          Data Statistik
-        </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Arsip dan Inventaris', BASE_URLS.arsip)">
-          <i class="fa-solid fa-box-archive" style="color:#d97706;"></i>
-          Arsip dan Inventaris
-        </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Ronda Malam', BASE_URLS.ronda)">
-          <i class="fa-solid fa-shield-halved" style="color:#16a34a;"></i>
-          Ronda Malam
-        </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Profil RT', BASE_URLS.profil)">
-          <i class="fa-solid fa-house-flag" style="color:#4f46e5;"></i>
-          Profil RT
-        </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Program Kerja', BASE_URLS.programKerja)">
-          <i class="fa-solid fa-clipboard-list" style="color:#9333ea;"></i>
-          Program Kerja
-        </li>
-        <li class="sidebar-menu-item"
-          onclick="openAppFromSidebar('Tanya Jawab', BASE_URLS.tanyaJawab)">
-          <i class="fa-solid fa-comments" style="color:#ea580c;"></i>
-          Tanya Jawab
-        </li>
-        
+      </ul>
       <button class="sidebar-logout-btn" onclick="logout()">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout / Keluar</span>
+        <i class="fa-solid fa-right-from-bracket"></i> Logout / Keluar
       </button>
-    </ul>
     </div>
   </div>
 
-  <!-- ================= 4. SUB-PAGE ================= -->
-  <div id="subPageView" class="subpage-view">
-    <div id="progressBar" class="progress-bar-container">
-      <div class="progress-bar-fill"></div>
-    </div>
-    <div class="subpage-header">
-      <button class="btn-subpage-back" onclick="closeAppPage()">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <div id="subPageTitle" class="subpage-title">
-        Halaman Layanan
-      </div>
-    </div>
-    <iframe
-      id="subPageIframe"
-      class="subpage-iframe"
-      src="about:blank"
-      onload="onIframeLoaded()">
-    </iframe>
-  </div>
 </div>
 
 <script>
-  // ==========================================================
-  // URL API APPS SCRIPT
-  // ==========================================================
-  const API_URL =
-    'https://script.google.com/macros/s/AKfycbx7VoQe3mp1fjP0kgr_QUA0z2qlR9nl39QdvjWhmx5XSD_rzrXZ-qBmu2pPpq-imcTbeg/exec';
+  const API_URL = 'https://script.google.com/macros/s/AKfycbx7VoQe3mp1fjP0kgr_QUA0z2qlR9nl39QdvjWhmx5XSD_rzrXZ-qBmu2pPpq-imcTbeg/exec';
+  const ADMIN_SPECIAL_NIK = '7471091606790001';
 
-  // ==========================================================
-  // DATA USER
-  // ==========================================================
   let currentUser = {
     nik: '',
+    nkk: '',
     nama: '',
     gender: '',
     visitorCount: 1,
     isAdmin: false,
     isDatabaseUser: false
   };
-  let isSubPageOpen = false;
 
-  // ==========================================================
-  // URL HALAMAN LAIN
-  // ==========================================================
+  let pollingState = null;
+  let pieChartInstance = null;
+
   const BASE_URLS = {
     dataPribadi: "https://script.google.com/macros/s/AKfycbzF3aQi0d4Ue0HfEQzQdvZBaOl7VLaGBK5UJePUwzZe9n_xsqfHvBoeyrRZouV-U_tC/exec",
     ajukanSurat: "https://script.google.com/macros/s/AKfycbw6tX6ZyEndNZrGnLp2EPOLOXtZp5QfmUhnkTI1CKprSFxlxHFPQulbpHbEQ33pG6jM/exec",
     infoData: "https://mysapa.github.io/infodata",
     programKerja: "https://mysapa.github.io/proker",
-    admin: "https://script.google.com/macros/s/AKfycbyNLJUvE3D02yJxKUeod5KzADNFCR6raiYUVX--8lb-FJyzhWIXMpaGiSSxUodtMVBa/exec",
-    infoAktual: "https://script.google.com/macros/s/AKfycbx5mfHA0OqJbkkseSGCAQb1lRsBhq6_eCsc03hK_xH89aEr983JTgfiGasbBzivRjSx/exec",
     tanyaJawab: "https://mysapa.github.io/faq",
     ronda: "https://mysapa.github.io/ronda",
     arsip: "https://mysapa.github.io/arsip",
-    profil: "https://script.google.com/macros/s/AKfycbxSLVFxMUnAy0G53_JBRMtsgrnRQSZUjhSvJOcmBlYH5u5S0ry1UayD4F0ySwLlqxA/exec",
-    pbb: "https://e-pbb.kendarikota.go.id/nop/index",
-    database: "https://script.google.com/macros/s/AKfycbw498HV8e6Xly3NP_EZTRA6StQoroDTZ_I3ZKC2AR1ppATgKuib07tsqx-QNc8-1BBRjA/exec"
+    profil: "https://script.google.com/macros/s/AKfycbxSLVFxMUnAy0G53_JBRMtsgrnRQSZUjhSvJOcmBlYH5u5S0ry1UayD4F0ySwLlqxA/exec"
   };
 
-  // ==========================================================
-  // PEMANGGIL API JSONP
-  // ==========================================================
   function callAPI(action, params, successCallback, errorCallback) {
-    const callbackName =
-      'sapaCallback_' +
-      Date.now() +
-      '_' +
-      Math.floor(Math.random() * 10000);
+    const callbackName = 'sapaCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
     const script = document.createElement('script');
-    let url =
-      API_URL +
-      '?action=' +
-      encodeURIComponent(action) +
-      '&callback=' +
-      callbackName;
+    let url = API_URL + '?action=' + encodeURIComponent(action) + '&callback=' + callbackName;
     if (params) {
       Object.keys(params).forEach(function(key) {
-        url +=
-          '&' +
-          encodeURIComponent(key) +
-          '=' +
-          encodeURIComponent(params[key]);
+        url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
       });
     }
     let finished = false;
     window[callbackName] = function(response) {
       finished = true;
-      try {
-        if (successCallback) {
-          successCallback(response);
-        }
-      } finally {
-        delete window[callbackName];
-        script.remove();
-      }
+      try { if (successCallback) successCallback(response); }
+      finally { delete window[callbackName]; script.remove(); }
     };
     script.onerror = function() {
       if (finished) return;
       delete window[callbackName];
       script.remove();
-      if (errorCallback) {
-        errorCallback();
-      }
+      if (errorCallback) errorCallback();
     };
     script.src = url;
     document.body.appendChild(script);
   }
 
-  // ==========================================================
-  // ENTER DENGAN KEYBOARD
-  // ==========================================================
-  function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      processLogin();
-    }
-  }
+  function handleKeyPress(event) { if (event.key === 'Enter') processLogin(); }
 
-  // ==========================================================
-  // SAPAAN
-  // ==========================================================
-  function getDynamicGreeting() {
-    const hours = new Date().getHours();
-    if (hours >= 4 && hours < 11) {
-      return "Selamat Pagi,";
-    }
-    if (hours >= 11 && hours < 15) {
-      return "Selamat Siang,";
-    }
-    if (hours >= 15 && hours < 18) {
-      return "Selamat Sore,";
-    }
-    return "Selamat Malam,";
-  }
-
-  // ==========================================================
-  // TANGGAL HEADER
-  // ==========================================================
-  function setFormattedHeaderDate() {
-    const now = new Date();
-    const options = {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    };
-    const dateString =
-      now.toLocaleDateString('id-ID', options);
-    const el =
-      document.getElementById('currentDateText');
-    if (el) {
-      el.textContent = dateString;
-    }
-  }
-
-  // ==========================================================
-  // LOGIN
-  // ==========================================================
   function processLogin() {
-    const nikVal =
-      document.getElementById('nikInput').value.trim();
-    const errorDiv =
-      document.getElementById('loginError');
-    const btnText =
-      document.getElementById('btnText');
-    const btnIcon =
-      document.getElementById('btnIcon');
-    const btnSpinner =
-      document.getElementById('btnSpinner');
-    const btnLogin =
-      document.getElementById('btnLogin');
-    if (!nikVal) {
-      showError("Silakan masukkan NIK terlebih dahulu.");
-      return;
-    }
-    errorDiv.style.display = 'none';
-    btnText.textContent = "Verifikasi...";
-    if (btnIcon) {
-      btnIcon.style.display = 'none';
-    }
-    btnSpinner.style.display = 'inline-block';
-    btnLogin.disabled = true;
-    callAPI(
-      'login',
-      { nik: nikVal },
-      function(res) {
-        btnText.textContent = "Masuk";
-        if (btnIcon) {
-          btnIcon.style.display = 'inline-block';
-        }
-        btnSpinner.style.display = 'none';
-        btnLogin.disabled = false;
-        if (res && res.success) {
-          currentUser.nik =
-            res.nik || '';
-          currentUser.nama =
-            res.nama || 'Warga RT 09';
-          currentUser.gender =
-            res.gender || '';
-          currentUser.visitorCount =
-            res.visitorCount || 1;
-          currentUser.isAdmin =
-            res.isAdmin === true;
-          currentUser.isDatabaseUser =
-            res.isDatabaseUser === true;
-          enterDashboard();
-        } else {
-          showError(
-            res && res.message
-              ? res.message
-              : "NIK tidak ditemukan."
-          );
-        }
-      },
-      function() {
-        btnText.textContent = "Masuk";
-        if (btnIcon) {
-          btnIcon.style.display = 'inline-block';
-        }
-        btnSpinner.style.display = 'none';
-        btnLogin.disabled = false;
-        showError(
-          "Terjadi kesalahan koneksi ke server."
-        );
+    const nikVal = document.getElementById('nikInput').value.trim();
+    if (!nikVal) { showError("Silakan masukkan NIK terlebih dahulu."); return; }
+    
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('btnText').textContent = "Verifikasi...";
+    document.getElementById('btnIcon').style.display = 'none';
+    document.getElementById('btnSpinner').style.display = 'inline-block';
+    document.getElementById('btnLogin').disabled = true;
+
+    callAPI('login', { nik: nikVal }, function(res) {
+      document.getElementById('btnText').textContent = "Masuk";
+      document.getElementById('btnIcon').style.display = 'inline-block';
+      document.getElementById('btnSpinner').style.display = 'none';
+      document.getElementById('btnLogin').disabled = false;
+
+      if (res && res.success) {
+        currentUser.nik = res.nik || '';
+        currentUser.nkk = res.nkk || '';
+        currentUser.nama = res.nama || 'Warga RT 09';
+        currentUser.gender = res.gender || '';
+        currentUser.visitorCount = res.visitorCount || 1;
+        currentUser.isAdmin = res.isAdmin === true;
+        currentUser.isDatabaseUser = res.isDatabaseUser === true;
+        enterDashboard();
+      } else {
+        showError(res && res.message ? res.message : "NIK tidak ditemukan.");
       }
-    );
+    }, function() {
+      document.getElementById('btnText').textContent = "Masuk";
+      document.getElementById('btnIcon').style.display = 'inline-block';
+      document.getElementById('btnSpinner').style.display = 'none';
+      document.getElementById('btnLogin').disabled = false;
+      showError("Terjadi kesalahan koneksi ke server.");
+    });
   }
 
-  // ==========================================================
-  // ERROR
-  // ==========================================================
   function showError(msg) {
-    const errorDiv =
-      document.getElementById('loginError');
-    document.getElementById('errorMsg')
-      .textContent = msg;
-    errorDiv.style.display = 'flex';
+    document.getElementById('errorMsg').textContent = msg;
+    document.getElementById('loginError').style.display = 'flex';
   }
 
-  // ==========================================================
-  // MASUK DASHBOARD
-  // ==========================================================
   function enterDashboard() {
     document.getElementById('loginView').style.display = 'none';
     document.getElementById('dashboardView').style.display = 'flex';
-    
-    const bottomNav = document.getElementById('bottomNavbar');
-    if (bottomNav) {
-      bottomNav.style.display = 'grid';
-    }
-
-    document.getElementById('timeGreeting').textContent = getDynamicGreeting();
     document.getElementById('dashUserName').textContent = currentUser.nama;
     document.getElementById('visitorCountVal').textContent = currentUser.visitorCount;
-    setFormattedHeaderDate();
+    fetchPollingStatus();
+  }
 
-    // ADMIN
-    const adminBtns = document.querySelectorAll('.admin-btn-target');
-    adminBtns.forEach(function(btn) {
-      if (currentUser.isAdmin) {
-        btn.classList.remove('disabled');
-      } else {
-        btn.classList.add('disabled');
+  // ==========================================================
+  // LOGIKA STATUS TOMBOL POLLING (SYARAT 1 & SYARAT 2)
+  // ==========================================================
+  function fetchPollingStatus() {
+    callAPI('get_polling', { nik: currentUser.nik, nkk: currentUser.nkk }, function(res) {
+      if (res && res.success) {
+        pollingState = res;
+        const btnPolling = document.getElementById('btnPolling');
+        
+        // SYARAT 1: Jika NIK Admin 7471091606790001 -> tombol AKTIF
+        if (currentUser.nik === ADMIN_SPECIAL_NIK) {
+          btnPolling.classList.remove('disabled');
+        } 
+        // SYARAT 2: Selain NIK Admin -> Tombol non-aktif kecuali "aktifkan polling" diceklis
+        else {
+          if (res.config && res.config.aktif === true) {
+            btnPolling.classList.remove('disabled');
+          } else {
+            btnPolling.classList.add('disabled');
+          }
+        }
       }
     });
+  }
 
-    // DATABASE
-    const databaseBtns = document.querySelectorAll('.database-btn-target');
-    databaseBtns.forEach(function(btn) {
-      if (currentUser.isDatabaseUser) {
-        btn.classList.remove('disabled');
-      } else {
-        btn.classList.add('disabled');
+  // ==========================================================
+  // BUKA SUBFORM POLLING (SYARAT 1, 2, 3)
+  // ==========================================================
+  function openPollingSubform() {
+    const btnPolling = document.getElementById('btnPolling');
+    if (btnPolling.classList.contains('disabled')) return;
+
+    // Tampilkan panel subpage polling
+    document.getElementById('pollingSubpage').classList.add('active');
+
+    // SYARAT 1: Jika admin (NIK 7471091606790001), tampilkan subform konfigurasi admin
+    const adminCard = document.getElementById('adminPollingFormCard');
+    if (currentUser.nik === ADMIN_SPECIAL_NIK) {
+      adminCard.style.display = 'block';
+      if (pollingState && pollingState.config) {
+        document.getElementById('adminPollDesc').value = pollingState.config.deskripsi || '';
+        document.getElementById('adminPollDeadline').value = pollingState.config.batasWaktu || '';
+        document.getElementById('adminPollAktif').checked = pollingState.config.aktif === true;
+        document.getElementById('adminPollHasil').checked = pollingState.config.aktifHasil === true;
+        updateCharCount();
       }
-    });
-
-    history.pushState({ page: 'dashboard' }, '');
-  }
-
-  // ==========================================================
-  // ABSEN RONDA DARI LOGIN
-  // ==========================================================
-  function openAbsenRondaDirect() {
-    const iframe =
-      document.getElementById('subPageIframe');
-    const progressBar =
-      document.getElementById('progressBar');
-    document.getElementById('subPageTitle')
-      .innerText = 'Ronda Malam';
-    if (progressBar) {
-      progressBar.style.display = 'block';
-    }
-    iframe.src = BASE_URLS.ronda;
-    if (!isSubPageOpen) {
-      isSubPageOpen = true;
-      history.pushState(
-        { subpageOpen: true },
-        ''
-      );
-    }
-    document.getElementById('subPageView')
-      .classList.add('active');
-  }
-
-  function closeSubpage() {
-    closeAppPage();
-  }
-
-  // ==========================================================
-  // SIDEBAR
-  // ==========================================================
-  function toggleSidebar(show) {
-    const backdrop =
-      document.getElementById('sidebarBackdrop');
-    const panel =
-      document.getElementById('sidebarPanel');
-    if (show) {
-      backdrop.classList.add('active');
-      panel.classList.add('active');
     } else {
-      backdrop.classList.remove('active');
-      panel.classList.remove('active');
+      adminCard.style.display = 'none';
     }
+
+    renderUserPollingUI();
   }
 
-  function openAppFromSidebar(title, baseUrl) {
-    toggleSidebar(false);
-    openAppPage(title, baseUrl);
+  function closePollingSubform() {
+    document.getElementById('pollingSubpage').classList.remove('active');
   }
 
-  // ==========================================================
-  // BUKA SUB-PAGE
-  // ==========================================================
-  function openAppPage(title, baseUrl) {
-    if (!baseUrl || baseUrl === 'about:blank') {
+  function updateCharCount() {
+    const val = document.getElementById('adminPollDesc').value;
+    document.getElementById('charCountText').textContent = val.length + ' / 1000';
+  }
+
+  function saveAdminPolling() {
+    const desc = document.getElementById('adminPollDesc').value.trim();
+    const deadline = document.getElementById('adminPollDeadline').value;
+    const aktif = document.getElementById('adminPollAktif').checked;
+    const aktifHasil = document.getElementById('adminPollHasil').checked;
+
+    if (desc.length > 1000) {
+      alert("Deskripsi maksimal 1000 karakter.");
       return;
     }
-    let targetUrl = baseUrl;
-    if (currentUser.nik) {
-      const separator =
-        baseUrl.indexOf('?') >= 0
-          ? '&'
-          : '?';
-      targetUrl =
-        baseUrl +
-        separator +
-        'nik=' +
-        encodeURIComponent(currentUser.nik);
-    }
-    document.getElementById('subPageTitle')
-      .textContent = title;
-    document.getElementById('progressBar')
-      .style.display = 'block';
-    const iframe =
-      document.getElementById('subPageIframe');
-    iframe.src = targetUrl;
-    document.getElementById('subPageView')
-      .classList.add('active');
-    if (!isSubPageOpen) {
-      isSubPageOpen = true;
-      history.pushState(
-        { subpageOpen: true },
-        ''
-      );
-    }
-  }
 
-  // ==========================================================
-  // IFRAME SELESAI MEMUAT
-  // ==========================================================
-  function onIframeLoaded() {
-    const progress =
-      document.getElementById('progressBar');
-    if (progress) {
-      progress.style.display = 'none';
-    }
-  }
-
-  // ==========================================================
-  // TUTUP SUB-PAGE
-  // ==========================================================
-  function closeAppPage(fromPopState = false) {
-    const subPage =
-      document.getElementById('subPageView');
-    if (!subPage.classList.contains('active')) {
-      return;
-    }
-    subPage.classList.remove('active');
-    setTimeout(function() {
-      document.getElementById('subPageIframe')
-        .src = 'about:blank';
-    }, 350);
-    if (isSubPageOpen) {
-      isSubPageOpen = false;
-      if (!fromPopState) {
-        history.back();
+    callAPI('save_polling_config', {
+      nik: currentUser.nik,
+      deskripsi: desc,
+      batasWaktu: deadline,
+      aktif: aktif,
+      aktifHasil: aktifHasil
+    }, function(res) {
+      if (res && res.success) {
+        alert("Pengaturan polling berhasil disimpan.");
+        fetchPollingStatus();
+        setTimeout(renderUserPollingUI, 500);
+      } else {
+        alert(res.message || "Gagal menyimpan pengaturan.");
       }
-    }
-  }
-
-  // ==========================================================
-  // BROWSER BACK
-  // ==========================================================
-  window.addEventListener(
-    'popstate',
-    function() {
-      if (isSubPageOpen) {
-        closeAppPage(true);
-      } else if (
-        document.getElementById('dashboardView')
-          .style.display === 'flex'
-      ) {
-        history.pushState(
-          { page: 'dashboard' },
-          ''
-        );
-      }
-    }
-  );
-
-  // ==========================================================
-  // ADMIN
-  // ==========================================================
-  function handleAdminClick() {
-    if (currentUser.isAdmin) {
-      openAppPage(
-        'Admin',
-        BASE_URLS.admin
-      );
-    }
-  }
-
-  // ==========================================================
-  // DATABASE
-  // ==========================================================
-  function handleDatabaseClick() {
-    if (currentUser.isDatabaseUser) {
-      openAppPage(
-        'Database',
-        BASE_URLS.database
-      );
-    }
-  }
-
-  // ==========================================================
-  // GALERI INFORMASI DATA
-  // ==========================================================
-  function loadProfilRTGallery() {
-    callAPI(
-      'profil',
-      null,
-      function(res) {
-        if (!res || !res.success) {
-          document.getElementById('imageGallery')
-            .innerHTML =
-            '<div class="loading-text" style="color:red;">Gagal memuat gambar</div>';
-          return;
-        }
-        renderImageGallery(res.data || []);
-      },
-      function() {
-        document.getElementById('imageGallery')
-          .innerHTML =
-          '<div class="loading-text" style="color:red;">Gagal memuat gambar</div>';
-      }
-    );
-  }
-
-  function renderImageGallery(urls) {
-    const container =
-      document.getElementById('imageGallery');
-    if (!urls || urls.length === 0) {
-      container.innerHTML =
-        '<div class="loading-text">Tidak ada informasi data ditemukan.</div>';
-      return;
-    }
-    let htmlContent = '';
-    urls.forEach(function(url, index) {
-      htmlContent +=
-        '<div class="gallery-card">';
-      htmlContent +=
-        '<img src="' +
-        escapeHtml(url) +
-        '" alt="Informasi ' +
-        (index + 1) +
-        '" loading="lazy" ';
-      htmlContent +=
-        'onerror="this.src=\'https://via.placeholder.com/150x100?text=Gambar+Error\';">';
-      htmlContent +=
-        '</div>';
     });
-    container.innerHTML = htmlContent;
   }
 
   // ==========================================================
-  // GALERI STANDAR PELAYANAN
+  // RENDER TAMPILAN POLLING & INFOGRAFIS (SYARAT 3)
   // ==========================================================
-  function loadStandarPelayananGallery() {
-    callAPI(
-      'standar',
-      null,
-      function(res) {
-        const container =
-          document.getElementById('imageGallerySP');
-        if (!container) {
-          return;
-        }
-        if (!res || !res.success) {
-          container.innerHTML =
-            '<div class="loading-text" style="color:red;">Gagal memuat gambar.</div>';
-          return;
-        }
-        const imageUrls =
-          res.data || [];
-        if (imageUrls.length === 0) {
-          container.innerHTML =
-            '<div class="loading-text">Tidak ada data standar pelayanan.</div>';
-          return;
-        }
-        let html = '';
-        imageUrls.forEach(function(url) {
-          html +=
-            '<div class="gallery-card-sp">' +
-            '<img src="' +
-            escapeHtml(url) +
-            '" alt="Standar Pelayanan">' +
-            '</div>';
-        });
-        container.innerHTML = html;
+  function renderUserPollingUI() {
+    if (!pollingState) return;
+
+    const config = pollingState.config || {};
+    const hasVoted = pollingState.hasVoted;
+    const isExpired = pollingState.isExpired;
+
+    // a. Pertanyaan (sesuai deskripsi)
+    document.getElementById('userPollDesc').textContent = config.deskripsi || 'Belum ada deskripsi polling.';
+
+    // Peringatan NKK / Teks Status
+    const alertBox = document.getElementById('pollAlertBox');
+    const alertText = document.getElementById('pollAlertText');
+
+    if (hasVoted) {
+      // SYARAT 3a: Jika sudah -> "Keluarga Anda telah memberikan pendapatnya"
+      alertBox.className = "poll-alert poll-alert-info";
+      alertText.textContent = "Keluarga Anda telah memberikan pendapatnya.";
+    } else if (isExpired) {
+      alertBox.className = "poll-alert poll-alert-danger";
+      alertText.textContent = "Waktu polling telah habis.";
+    } else {
+      // SYARAT 3a: Jika belum -> "Silakan memberikan pendapat mewakili keluarga Anda"
+      alertBox.className = "poll-alert poll-alert-warning";
+      alertText.textContent = "Silakan memberikan pendapat mewakili keluarga Anda.";
+    }
+
+    // SYARAT 3c: Tombol jawaban non-aktif jika sudah memilih atau waktu habis
+    const disableButtons = hasVoted || isExpired;
+    document.getElementById('btnVoteSetuju').disabled = disableButtons;
+    document.getElementById('btnVoteTidak').disabled = disableButtons;
+    document.getElementById('btnVoteAbstain').disabled = disableButtons;
+
+    // SYARAT 3b: Infografis Hasil Polling (Diagram Pie)
+    const showChart = config.aktifHasil || currentUser.nik === ADMIN_SPECIAL_NIK;
+    if (showChart) {
+      document.getElementById('chartHolder').style.display = 'block';
+      document.getElementById('resultHiddenMsg').style.display = 'none';
+      renderPieChart(pollingState.counts);
+    } else {
+      document.getElementById('chartHolder').style.display = 'none';
+      document.getElementById('resultHiddenMsg').style.display = 'block';
+    }
+  }
+
+  function submitUserOpinion(jawaban) {
+    if (!confirm("Apakah Anda yakin ingin memberikan pendapat: " + jawaban + "?")) return;
+
+    callAPI('submit_vote', {
+      nik: currentUser.nik,
+      nkk: currentUser.nkk,
+      jawaban: jawaban
+    }, function(res) {
+      if (res && res.success) {
+        pollingState = res;
+        alert("Pendapat Anda berhasil dikirim!");
+        renderUserPollingUI();
+      } else {
+        alert(res.message || "Gagal mengirim pendapat.");
+      }
+    });
+  }
+
+  function renderPieChart(counts) {
+    counts = counts || { setuju: 0, tidakSetuju: 0, abstain: 0, total: 0 };
+    const ctx = document.getElementById('pollingPieChart').getContext('2d');
+    
+    if (pieChartInstance) {
+      pieChartInstance.destroy();
+    }
+
+    const total = counts.total || 0;
+    
+    pieChartInstance = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Setuju', 'Tidak Setuju', 'Abstain'],
+        datasets: [{
+          data: [counts.setuju, counts.tidakSetuju, counts.abstain],
+          backgroundColor: ['#10b981', '#ef4444', '#f59e0b'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
       },
-      function() {
-        const container =
-          document.getElementById('imageGallerySP');
-        if (container) {
-          container.innerHTML =
-            '<div class="loading-text" style="color:red;">Gagal memuat gambar.</div>';
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' } }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.raw || 0;
+                const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                return `${context.label}: ${val} suara (${pct}%)`;
+              }
+            }
+          }
         }
       }
-    );
+    });
   }
 
-  // ==========================================================
-  // HEADER LOGIN
-  // ==========================================================
-  function loadLoginHeaderImage() {
-    callAPI(
-      'header',
-      null,
-      function(res) {
-        if (!res || !res.success) {
-          return;
-        }
-        const urls =
-          res.data || [];
-        if (urls.length === 0) {
-          return;
-        }
-        const rawUrl =
-          String(urls[0]).trim();
-        if (!rawUrl) {
-          return;
-        }
-        const imgEl =
-          document.getElementById('loginHeaderImg');
-        const containerEl =
-          document.getElementById('loginHeaderContainer');
-        if (!imgEl || !containerEl) {
-          return;
-        }
-        imgEl.removeAttribute('src');
-        let imageUrl = rawUrl;
-        const separator =
-          imageUrl.indexOf('?') >= 0
-            ? '&'
-            : '?';
-        imageUrl +=
-          separator +
-          'v=' +
-          new Date().getTime();
-        containerEl.style.display = 'none';
-        imgEl.onload = function() {
-          containerEl.style.display = 'block';
-        };
-        imgEl.onerror = function() {
-          console.error(
-            'Gambar header gagal dimuat:',
-            rawUrl
-          );
-          containerEl.style.display = 'none';
-        };
-        imgEl.src = imageUrl;
-      },
-      function() {
-        console.error(
-          'Gagal memuat gambar header login.'
-        );
-      }
-    );
-  }
-
-  // ==========================================================
-  // FORMAT URL GOOGLE DRIVE
-  // ==========================================================
-  function formatDriveImageUrl(url) {
-    if (!url) {
-      return '';
-    }
-    const match =
-      url.match(/[-\w]{25,}/);
-    if (match) {
-      const fileId =
-        match[0];
-      return (
-        'https://lh3.googleusercontent.com/d/' +
-        fileId
-      );
-    }
-    return url;
-  }
-
-  // ==========================================================
-  // ESCAPE HTML
-  // ==========================================================
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  // ==========================================================
-  // PANGGILAN DARURAT
-  // ==========================================================
-  function toggleEmergencyMenu() {
-    const menu =
-      document.getElementById('emergencyMenu');
-    const arrow =
-      document.getElementById('emergencyArrow');
-    menu.classList.toggle('show');
-    arrow.classList.toggle('open');
-  }
-
-  // ==========================================================
-  // MENU LAINNYA
-  // ==========================================================
   function toggleOtherFeatures() {
-    const menu =
-      document.getElementById('otherFeaturesMenu');
-    const icon =
-      document.getElementById('otherFeaturesIcon');
-    const text =
-      document.getElementById('otherFeaturesText');
-    const isOpen =
-      menu.classList.toggle('show');
+    const menu = document.getElementById('otherFeaturesMenu');
+    const icon = document.getElementById('otherFeaturesIcon');
+    menu.classList.toggle('show');
     icon.classList.toggle('open');
-    text.textContent =
-      isOpen
-        ? 'Sembunyikan'
-        : 'Lainnya';
   }
 
-  // ==========================================================
-  // INISIALISASI
-  // ==========================================================
-  setFormattedHeaderDate();
-  document.addEventListener(
-    'DOMContentLoaded',
-    function() {
-      loadProfilRTGallery();
-      loadStandarPelayananGallery();
-      loadLoginHeaderImage();
-    }
-  );
+  function toggleSidebar(show) {
+    document.getElementById('sidebarBackdrop').classList.toggle('active', show);
+    document.getElementById('sidebarPanel').classList.toggle('active', show);
+  }
 
-  // ==========================================================
-  // LOGOUT
-  // ==========================================================
   function logout() {
-    currentUser = {
-      nik: '',
-      nama: '',
-      gender: '',
-      visitorCount: 1,
-      isAdmin: false,
-      isDatabaseUser: false
-    };
-    document.getElementById('nikInput').value = '';
-    document.getElementById('loginError').style.display = 'none';
     document.getElementById('dashboardView').style.display = 'none';
-    document.getElementById('bottomNavbar').style.display = 'none';
     document.getElementById('loginView').style.display = 'flex';
-    closeAppPage(true);
-    toggleSidebar(false);
+    document.getElementById('nikInput').value = '';
+    closePollingSubform();
   }
 </script>
 </body>
