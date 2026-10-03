@@ -579,14 +579,14 @@
     .bg-pln { background:#fef9c3; color:#ca8a04; }
     .bg-damkar { background:#ffe4e6; color:#e11d48; }
     .bg-ambulans { background:#fee2e2; color:#e11d48; }
-    .disabled {
+    .hidden {
       opacity: 0.6 !important;
       cursor: not-allowed !important;
       filter: grayscale(100%) !important;
       pointer-events: none !important;
       user-select: none;
     }
-    .menu-item.disabled .menu-icon-box::after {
+    .menu-item.hidden .menu-icon-box::after {
       content: "\f023";
       font-family: "Font Awesome 6 Free";
       font-weight: 700;
@@ -1131,12 +1131,12 @@
     }
     .polling-choice i { font-size:25px; color:#ffffff; }
     .polling-choice-setuju { background-color:#16a34a; }
-    .polling-choice-setuju:hover:not(:disabled) { background-color:#15803d;transform:translateY(-2px);box-shadow:0 7px 18px rgba(22,165,74,0.3); }
+    .polling-choice-setuju:hover:not(:hidden) { background-color:#15803d;transform:translateY(-2px);box-shadow:0 7px 18px rgba(22,165,74,0.3); }
     .polling-choice-tidak { background-color:#dc2626; }
-    .polling-choice-tidak:hover:not(:disabled) { background-color:#b91c1c;transform:translateY(-2px);box-shadow:0 7px 18px rgba(220,38,38,0.3); }
+    .polling-choice-tidak:hover:not(:hidden) { background-color:#b91c1c;transform:translateY(-2px);box-shadow:0 7px 18px rgba(220,38,38,0.3); }
     .polling-choice-abstain { background-color:#eab308; }
-    .polling-choice-abstain:hover:not(:disabled) { background-color:#ca8a04;transform:translateY(-2px);box-shadow:0 7px 18px rgba(234,179,8,0.3); }
-    .polling-choice:disabled { opacity:.5;cursor:not-allowed;filter:grayscale(0.6); }
+    .polling-choice-abstain:hover:not(:hidden) { background-color:#ca8a04;transform:translateY(-2px);box-shadow:0 7px 18px rgba(234,179,8,0.3); }
+    .polling-choice:hidden { opacity:.5;cursor:not-allowed;filter:grayscale(0.6); }
     .polling-family-note { background:#fefce8;border:1px solid #fde68a;color:#854d0e;border-radius:13px;padding:12px;font-size:12.5px;line-height:1.5;text-align:center;margin-top:13px; }
     .polling-result-title { text-align:center;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:10px; }
     .polling-pie-wrap { display:flex;justify-content:center;margin:4px 0 16px; }
@@ -1498,7 +1498,7 @@
             <span class="menu-label">Profil RT</span>
           </div>
           <div id="btnAdmin"
-            class="menu-item admin-btn-target disabled"
+            class="menu-item admin-btn-target hidden"
             onclick="handleAdminClick()">
             <div class="menu-icon-box bg-admin">
               <i class="fa-solid fa-user-gear"></i>
@@ -1506,14 +1506,14 @@
             <span class="menu-label">Admin</span>
           </div>
           <div id="btnDatabase"
-            class="menu-item database-btn-target disabled"
+            class="menu-item database-btn-target hidden"
             onclick="handleDatabaseClick()">
             <div class="menu-icon-box bg-dbase">
               <i class="fa-solid fa-database"></i>
             </div>
             <span class="menu-label">Database</span>
           </div>
-          <div id="btnPolling" class="menu-item polling-btn-target disabled" onclick="handlePollingClick()">
+          <div id="btnPolling" class="menu-item polling-btn-target hidden" onclick="handlePollingClick()">
             <div class="menu-icon-box bg-polling">
               <i class="fa-solid fa-square-poll-vertical"></i>
             </div>
@@ -1899,7 +1899,7 @@
       btnIcon.style.display = 'none';
     }
     btnSpinner.style.display = 'inline-block';
-    btnLogin.disabled = true;
+    btnLogin.hidden = true;
     callAPI(
       'login',
       { nik: nikVal },
@@ -1909,7 +1909,7 @@
           btnIcon.style.display = 'inline-block';
         }
         btnSpinner.style.display = 'none';
-        btnLogin.disabled = false;
+        btnLogin.hidden = false;
         if (res && res.success) {
           currentUser.nik =
             res.nik || '';
@@ -1938,7 +1938,7 @@
           btnIcon.style.display = 'inline-block';
         }
         btnSpinner.style.display = 'none';
-        btnLogin.disabled = false;
+        btnLogin.hidden = false;
         showError(
           "Terjadi kesalahan koneksi ke server."
         );
@@ -1978,9 +1978,9 @@
     const adminBtns = document.querySelectorAll('.admin-btn-target');
     adminBtns.forEach(function(btn) {
       if (currentUser.isAdmin) {
-        btn.classList.remove('disabled');
+        btn.classList.remove('hidden');
       } else {
-        btn.classList.add('disabled');
+        btn.classList.add('hidden');
       }
     });
 
@@ -1988,9 +1988,9 @@
     const databaseBtns = document.querySelectorAll('.database-btn-target');
     databaseBtns.forEach(function(btn) {
       if (currentUser.isDatabaseUser) {
-        btn.classList.remove('disabled');
+        btn.classList.remove('hidden');
       } else {
-        btn.classList.add('disabled');
+        btn.classList.add('hidden');
       }
     });
 
@@ -2396,8 +2396,8 @@
     if (!btn) return;
     const admin = currentUser.isDatabaseUser === true;
     const enabled = admin || (status && status.hasPolling && (status.poll && (status.poll.pollingAktif || status.poll.hasilAktif)));
-    btn.classList.toggle('disabled', !enabled);
-    btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    btn.classList.toggle('hidden', !enabled);
+    btn.setAttribute('aria-hidden', enabled ? 'false' : 'true');
     btn.title = admin ? 'Kelola Polling' : (enabled ? 'Buka Polling' : 'Polling belum dibuka');
   }
 
@@ -2497,7 +2497,7 @@
     const result = document.getElementById('pollingResultCheck');
     if (!active || !result) return;
     const valid = !!deadline && new Date(deadline).getTime() >= Date.now();
-    active.disabled = !valid || result.checked;
+    active.hidden = !valid || result.checked;
     if (!valid) active.checked = false;
     if (result.checked) active.checked = false;
   }
@@ -2618,13 +2618,13 @@
     }
   }
 
-  function pollingChoiceButton(label, icon, disabled) {
+  function pollingChoiceButton(label, icon, hidden) {
     let typeClass = '';
     if (label === 'Setuju') typeClass = ' polling-choice-setuju';
     else if (label === 'Tidak Setuju') typeClass = ' polling-choice-tidak';
     else if (label === 'Abstain') typeClass = ' polling-choice-abstain';
 
-    return '<button class="polling-choice' + typeClass + '" type="button" ' + (disabled ? 'disabled' : '') + ' onclick="submitPollingChoice(\'' + label + '\')"><i class="' + icon + '"></i><span>' + label + '</span></button>';
+    return '<button class="polling-choice' + typeClass + '" type="button" ' + (hidden ? 'hidden' : '') + ' onclick="submitPollingChoice(\'' + label + '\')"><i class="' + icon + '"></i><span>' + label + '</span></button>';
   }
 
   function submitPollingChoice(answer) {
