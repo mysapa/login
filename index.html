@@ -1045,6 +1045,116 @@
       object-position: center center;
     }
 
+    /* ================= POLLING ================= */
+    .bg-polling { background:#dbeafe; color:#2563eb; }
+    .polling-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.58);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .polling-modal-backdrop.show { display:flex; }
+    .polling-modal {
+      width:100%;
+      max-width:520px;
+      max-height:90vh;
+      overflow-y:auto;
+      background:#fff;
+      border-radius:22px;
+      box-shadow:0 20px 60px rgba(15,23,42,0.25);
+      padding:20px;
+      position:relative;
+    }
+    .polling-modal-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .polling-modal-title {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:17px;
+      font-weight:800;
+      color:#0f172a;
+    }
+    .polling-close {
+      width:36px;height:36px;border:0;border-radius:10px;
+      background:#f1f5f9;color:#64748b;cursor:pointer;font-size:16px;
+    }
+    .polling-form-group { margin-bottom:15px; }
+    .polling-form-label {
+      display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:7px;
+    }
+    .polling-textarea,.polling-datetime {
+      width:100%;border:1px solid #cbd5e1;border-radius:12px;
+      padding:11px 12px;font-size:13px;color:#0f172a;outline:none;background:#f8fafc;
+    }
+    .polling-textarea { min-height:130px;resize:vertical;line-height:1.45; }
+    .polling-textarea:focus,.polling-datetime:focus { border-color:#0284c7;box-shadow:0 0 0 3px rgba(2,132,199,.12);background:#fff; }
+    .polling-char-count { text-align:right;font-size:10px;color:#94a3b8;margin-top:4px; }
+    .polling-check-row { display:flex;flex-wrap:wrap;gap:10px; }
+    .polling-check-card {
+      flex:1 1 150px;display:flex;align-items:center;gap:8px;
+      padding:11px 12px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;
+      font-size:12px;font-weight:700;color:#334155;
+    }
+    .polling-check-card input { width:17px;height:17px;accent-color:#2563eb; }
+    .polling-note { font-size:11px;color:#64748b;line-height:1.45;margin-top:8px; }
+    .polling-actions { display:flex;gap:9px;margin-top:18px; }
+    .polling-btn { flex:1;border:0;border-radius:12px;padding:12px;font-size:12px;font-weight:800;cursor:pointer; }
+    .polling-btn-primary { background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff; }
+    .polling-btn-secondary { background:#f1f5f9;color:#475569; }
+    .polling-btn-danger { background:#fee2e2;color:#b91c1c; }
+    .polling-question {
+      background:#eff6ff;border:1px solid #dbeafe;border-radius:15px;padding:14px;
+      font-size:14px;font-weight:700;line-height:1.5;color:#0f172a;margin-bottom:15px;
+    }
+    .polling-info-box {
+      text-align:center;margin-bottom:15px;padding:10px 12px;background:#f8fafc;border-radius:14px;border:1px solid #e2e8f0;
+    }
+    .polling-deadline { font-size:12px;color:#64748b;margin-bottom:4px; }
+    .polling-countdown { font-size:13px;font-weight:700;color:#0284c7; }
+    .polling-countdown span { font-family:monospace;font-size:15px;letter-spacing:1px; }
+    .polling-choice-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:9px; }
+    .polling-choice {
+      border:none;border-radius:14px;padding:13px 7px;
+      cursor:pointer;font-weight:800;font-size:13px;color:#ffffff;display:flex;flex-direction:column;align-items:center;gap:7px;
+      transition:all 0.2s ease;
+    }
+    .polling-choice i { font-size:25px; color:#ffffff; }
+    .polling-choice-setuju { background-color:#16a34a; }
+    .polling-choice-setuju:hover:not(:disabled) { background-color:#15803d;transform:translateY(-2px);box-shadow:0 7px 18px rgba(22,165,74,0.3); }
+    .polling-choice-tidak { background-color:#dc2626; }
+    .polling-choice-tidak:hover:not(:disabled) { background-color:#b91c1c;transform:translateY(-2px);box-shadow:0 7px 18px rgba(220,38,38,0.3); }
+    .polling-choice-abstain { background-color:#eab308; }
+    .polling-choice-abstain:hover:not(:disabled) { background-color:#ca8a04;transform:translateY(-2px);box-shadow:0 7px 18px rgba(234,179,8,0.3); }
+    .polling-choice:disabled { opacity:.5;cursor:not-allowed;filter:grayscale(0.6); }
+    .polling-family-note { background:#fefce8;border:1px solid #fde68a;color:#854d0e;border-radius:13px;padding:12px;font-size:12.5px;line-height:1.5;text-align:center;margin-top:13px; }
+    .polling-result-title { text-align:center;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:10px; }
+    .polling-pie-wrap { display:flex;justify-content:center;margin:4px 0 16px; }
+    .polling-pie { width:190px;height:190px;border-radius:50%;position:relative;background:#e2e8f0; }
+    .polling-pie::after { content:"";position:absolute;inset:43px;background:#fff;border-radius:50%; }
+    .polling-legend { display:grid;gap:7px; }
+    .polling-legend-row { display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#475569; }
+    .polling-legend-left { display:flex;align-items:center;gap:7px; }
+    .polling-dot { width:10px;height:10px;border-radius:50%;display:inline-block; }
+    .polling-empty { text-align:center;padding:18px 8px;color:#64748b;font-size:12px; }
+    @media (max-width:576px) {
+      .polling-modal { padding:17px;border-radius:19px; }
+      .polling-choice-grid { gap:7px; }
+      .polling-choice { padding:11px 5px;font-size:12px; }
+      .polling-pie { width:170px;height:170px; }
+      .polling-pie::after { inset:39px; }
+    }
+
     /* PANGGILAN DARURAT */
     .emergency-section {
       width: 100%;
@@ -1387,13 +1497,6 @@
             </div>
             <span class="menu-label">Profil RT</span>
           </div>
-          <div class="menu-item"
-            onclick="openAppPage('Bayar PBB', BASE_URLS.pbb)">
-            <div class="menu-icon-box bg-pbb">
-              <i class="fa-solid fa-money-bill-wave"></i>
-            </div>
-            <span class="menu-label">e-PBB</span>
-          </div>
           <div id="btnAdmin"
             class="menu-item admin-btn-target disabled"
             onclick="handleAdminClick()">
@@ -1409,6 +1512,12 @@
               <i class="fa-solid fa-database"></i>
             </div>
             <span class="menu-label">Database</span>
+          </div>
+          <div id="btnPolling" class="menu-item polling-btn-target disabled" onclick="handlePollingClick()">
+            <div class="menu-icon-box bg-polling">
+              <i class="fa-solid fa-square-poll-vertical"></i>
+            </div>
+            <span class="menu-label">Polling</span>
           </div>
           <div class="menu-item"
             onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)">
@@ -1572,12 +1681,71 @@
   </div>
 </div>
 
+  <!-- ================= MODAL POLLING ================= -->
+  <div id="pollingAdminModal" class="polling-modal-backdrop" aria-hidden="true">
+    <div class="polling-modal" role="dialog" aria-modal="true" aria-labelledby="pollingAdminTitle">
+      <div class="polling-modal-header">
+        <div id="pollingAdminTitle" class="polling-modal-title"><i class="fa-solid fa-square-poll-vertical" style="color:#2563eb;"></i> Kelola Polling</div>
+        <button class="polling-close" type="button" onclick="closePollingModal('pollingAdminModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="polling-form-group">
+        <label class="polling-form-label" for="pollingDescription">Deskripsi / Pertanyaan Polling</label>
+        <textarea id="pollingDescription" class="polling-textarea" maxlength="1000" placeholder="Tuliskan pertanyaan atau deskripsi polling..."></textarea>
+        <div class="polling-char-count"><span id="pollingCharCount">0</span>/1000 karakter</div>
+      </div>
+      <div class="polling-form-group">
+        <label class="polling-form-label" for="pollingDeadline">Batas Waktu Polling</label>
+        <input id="pollingDeadline" class="polling-datetime" type="datetime-local" onchange="updatePollingAdminControls()">
+      </div>
+      <div class="polling-form-group">
+        <div class="polling-check-row">
+          <label class="polling-check-card"><input id="pollingActiveCheck" type="checkbox" onchange="updatePollingAdminControls()"><span>Polling</span></label>
+          <label class="polling-check-card"><input id="pollingResultCheck" type="checkbox" onchange="updatePollingAdminControls()"><span>Hasil</span></label>
+        </div>
+        <div class="polling-note">Ceklis <b>Polling</b> hanya dapat aktif jika batas waktu sudah ditentukan dan belum lewat. Ceklis <b>Hasil</b> menutup polling dan menampilkan hasil kepada warga.</div>
+      </div>
+      <div class="polling-actions">
+        <button class="polling-btn polling-btn-secondary" type="button" onclick="startNewPolling()"><i class="fa-solid fa-plus"></i> Polling Baru</button>
+        <button class="polling-btn polling-btn-primary" type="button" onclick="saveAdminPolling()"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+      </div>
+      <div id="pollingAdminMessage" class="polling-note" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div id="pollingUserModal" class="polling-modal-backdrop" aria-hidden="true">
+    <div class="polling-modal" role="dialog" aria-modal="true" aria-labelledby="pollingUserTitle">
+      <div class="polling-modal-header">
+        <div id="pollingUserTitle" class="polling-modal-title"><i class="fa-solid fa-square-poll-vertical" style="color:#2563eb;"></i> Polling Warga</div>
+        <button class="polling-close" type="button" onclick="closePollingModal('pollingUserModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="pollingUserContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI POLLING -->
+  <div id="pollingConfirmModal" class="polling-modal-backdrop" aria-hidden="true">
+    <div class="polling-modal" style="max-width:420px; text-align:center;" role="dialog" aria-modal="true" aria-labelledby="pollingConfirmTitle">
+      <div class="polling-modal-header" style="justify-content:center; margin-bottom:12px;">
+        <div id="pollingConfirmTitle" class="polling-modal-title">
+          <i class="fa-solid fa-circle-question" style="color:#2563eb;"></i> Konfirmasi Polling
+        </div>
+      </div>
+      <div id="pollingConfirmText" style="font-size:14px; font-weight:700; color:#0f172a; margin:16px 0 24px; line-height:1.5;">
+        Anda setuju dengan rencana/kebijakan RT?
+      </div>
+      <div class="polling-actions" style="margin-top:0;">
+        <button class="polling-btn polling-btn-secondary" type="button" onclick="closePollingModal('pollingConfirmModal')">Tidak</button>
+        <button class="polling-btn polling-btn-primary" type="button" onclick="confirmSubmitPollingChoice()">Ya</button>
+      </div>
+    </div>
+  </div>
+
 <script>
   // ==========================================================
   // URL API APPS SCRIPT
   // ==========================================================
   const API_URL =
-    'https://script.google.com/macros/s/AKfycbx7VoQe3mp1fjP0kgr_QUA0z2qlR9nl39QdvjWhmx5XSD_rzrXZ-qBmu2pPpq-imcTbeg/exec';
+    'https://script.google.com/macros/s/AKfycbx2EDwltmwL0w_CzOnjAqRHltkL3qnyIo6jhHc6QX7PMpRQSxqLgSCE1XAgiZoIMisBJA/exec';
 
   // ==========================================================
   // DATA USER
@@ -1826,6 +1994,7 @@
       }
     });
 
+    loadPollingStatus(false);
     history.pushState({ page: 'dashboard' }, '');
   }
 
@@ -2195,6 +2364,335 @@
   }
 
   // ==========================================================
+  // POLLING
+  // ==========================================================
+  let currentPolling = null;
+  let currentPollingAdminId = '';
+  let selectedPollingChoice = '';
+  let pollingTimerInterval = null;
+
+  function closePollingModal(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('show');
+      el.setAttribute('aria-hidden', 'true');
+    }
+    if (id === 'pollingUserModal' && pollingTimerInterval) {
+      clearInterval(pollingTimerInterval);
+      pollingTimerInterval = null;
+    }
+  }
+
+  function openPollingModal(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('show');
+      el.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function updatePollingButtonState(status) {
+    const btn = document.getElementById('btnPolling');
+    if (!btn) return;
+    const admin = currentUser.isAdmin === true;
+    const enabled = admin || (status && status.hasPolling && (status.poll && (status.poll.pollingAktif || status.poll.hasilAktif)));
+    btn.classList.toggle('disabled', !enabled);
+    btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    btn.title = admin ? 'Kelola Polling' : (enabled ? 'Buka Polling' : 'Polling belum dibuka');
+  }
+
+  function loadPollingStatus(openAfterLoad) {
+    if (!currentUser.nik) return;
+    callAPI('pollingstatus', { nik: currentUser.nik }, function(res) {
+      if (!res || !res.success) {
+        updatePollingButtonState(null);
+        return;
+      }
+      currentPolling = res;
+      updatePollingButtonState(res);
+      if (openAfterLoad) renderUserPolling(res);
+    }, function() {
+      updatePollingButtonState(null);
+    });
+  }
+
+  function handlePollingClick() {
+    if (!currentUser.nik) return;
+    if (currentUser.isAdmin) {
+      openAdminPolling();
+      return;
+    }
+    callAPI('pollingstatus', { nik: currentUser.nik }, function(res) {
+      if (!res || !res.success) {
+        showPollingToast(res && res.message ? res.message : 'Data polling tidak dapat dimuat.');
+        return;
+      }
+      currentPolling = res;
+      updatePollingButtonState(res);
+      if (!(res.poll && (res.poll.pollingAktif || res.poll.hasilAktif))) {
+        return;
+      }
+      renderUserPolling(res);
+    }, function() {
+      showPollingToast('Terjadi kesalahan koneksi saat memuat polling.');
+    });
+  }
+
+  function openAdminPolling() {
+    document.getElementById('pollingDescription').value = '';
+    document.getElementById('pollingDeadline').value = '';
+    document.getElementById('pollingActiveCheck').checked = false;
+    document.getElementById('pollingResultCheck').checked = false;
+    currentPollingAdminId = '';
+    document.getElementById('pollingAdminMessage').style.display = 'none';
+    openPollingModal('pollingAdminModal');
+
+    callAPI('pollingadmin', { nik: currentUser.nik }, function(res) {
+      if (!res || !res.success) {
+        showPollingAdminMessage(res && res.message ? res.message : 'Gagal memuat polling.', true);
+        return;
+      }
+      if (res.hasPolling && res.poll) {
+        currentPollingAdminId = res.poll.id || '';
+        document.getElementById('pollingDescription').value = res.poll.deskripsi || '';
+        document.getElementById('pollingDeadline').value = normalizeDatetimeLocal(res.poll.batasWaktu || '');
+        document.getElementById('pollingActiveCheck').checked = !!res.poll.pollingAktif;
+        document.getElementById('pollingResultCheck').checked = !!res.poll.hasilAktif;
+        updatePollingCharCount();
+        updatePollingAdminControls();
+      }
+    }, function() {
+      showPollingAdminMessage('Gagal memuat data polling.', true);
+    });
+  }
+
+  function startNewPolling() {
+    currentPollingAdminId = '';
+    document.getElementById('pollingDescription').value = '';
+    document.getElementById('pollingDeadline').value = '';
+    document.getElementById('pollingActiveCheck').checked = false;
+    document.getElementById('pollingResultCheck').checked = false;
+    updatePollingCharCount();
+    updatePollingAdminControls();
+    document.getElementById('pollingDescription').focus();
+  }
+
+  function normalizeDatetimeLocal(value) {
+    if (!value) return '';
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return String(value).slice(0,16);
+    const pad = n => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  function updatePollingCharCount() {
+    const el = document.getElementById('pollingDescription');
+    const count = document.getElementById('pollingCharCount');
+    if (el && count) count.textContent = el.value.length;
+  }
+
+  function updatePollingAdminControls() {
+    const deadline = document.getElementById('pollingDeadline').value;
+    const active = document.getElementById('pollingActiveCheck');
+    const result = document.getElementById('pollingResultCheck');
+    if (!active || !result) return;
+    const valid = !!deadline && new Date(deadline).getTime() >= Date.now();
+    active.disabled = !valid || result.checked;
+    if (!valid) active.checked = false;
+    if (result.checked) active.checked = false;
+  }
+
+  function saveAdminPolling() {
+    const description = document.getElementById('pollingDescription').value.trim();
+    const deadline = document.getElementById('pollingDeadline').value;
+    const active = document.getElementById('pollingActiveCheck').checked;
+    const result = document.getElementById('pollingResultCheck').checked;
+    if (!description) { showPollingAdminMessage('Deskripsi / pertanyaan wajib diisi.', true); return; }
+    if (description.length > 1000) { showPollingAdminMessage('Deskripsi maksimal 1000 karakter.', true); return; }
+    if (!deadline) { showPollingAdminMessage('Batas waktu wajib ditentukan.', true); return; }
+
+    callAPI('pollingcreate', {
+      nik: currentUser.nik,
+      pollId: currentPollingAdminId,
+      deskripsi: description,
+      batasWaktu: deadline,
+      pollingAktif: active ? '1' : '0',
+      hasilAktif: result ? '1' : '0'
+    }, function(res) {
+      if (res && res.success) {
+        currentPollingAdminId = res.pollId || currentPollingAdminId;
+        showPollingAdminMessage(res.message || 'Data polling telah disimpan.', false);
+        loadPollingStatus(false);
+
+        setTimeout(function() {
+          closePollingModal('pollingAdminModal');
+        }, 1200);
+      } else {
+        showPollingAdminMessage(res && res.message ? res.message : 'Polling gagal disimpan.', true);
+      }
+    }, function() {
+      showPollingAdminMessage('Terjadi kesalahan koneksi saat menyimpan polling.', true);
+    });
+  }
+
+  function showPollingAdminMessage(message, isError) {
+    const el = document.getElementById('pollingAdminMessage');
+    if (!el) return;
+    el.textContent = message;
+    el.style.display = 'block';
+    el.style.color = isError ? '#b91c1c' : '#15803d';
+  }
+
+  function showPollingToast(message) {
+    const el = document.getElementById('pollingUserContent');
+    if (el) el.innerHTML = '<div class="polling-empty">' + escapeHtml(message) + '</div>';
+  }
+
+  function startPollingCountdown(targetDateStr) {
+    if (pollingTimerInterval) clearInterval(pollingTimerInterval);
+    const targetTime = new Date(targetDateStr).getTime();
+    
+    function update() {
+      const el = document.getElementById('pollingCountdownTimer');
+      if (!el) return;
+      const now = Date.now();
+      const diff = targetTime - now;
+      if (isNaN(targetTime) || diff <= 0) {
+        el.textContent = '00:00:00';
+        if (pollingTimerInterval) clearInterval(pollingTimerInterval);
+        return;
+      }
+      const totalSec = Math.floor(diff / 1000);
+      const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+      const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+      const s = String(totalSec % 60).padStart(2, '0');
+      el.textContent = h + ':' + m + ':' + s;
+    }
+    
+    update();
+    pollingTimerInterval = setInterval(update, 1000);
+  }
+
+  function renderUserPolling(res) {
+    const content = document.getElementById('pollingUserContent');
+    if (!content || !res || !res.poll) return;
+    const poll = res.poll;
+    let html = '<div class="polling-question">' + escapeHtml(poll.deskripsi) + '</div>';
+    
+    if (poll.batasWaktu) {
+      html += '<div class="polling-info-box">' +
+                '<div class="polling-deadline"><i class="fa-regular fa-clock"></i> Batas Waktu: ' + escapeHtml(formatPollingDate(poll.batasWaktu)) + '</div>' +
+                '<div class="polling-countdown"><i class="fa-solid fa-hourglass-half"></i> Sisa Waktu: <span id="pollingCountdownTimer">00:00:00</span></div>' +
+              '</div>';
+    }
+
+    if (poll.hasilAktif) {
+      html += renderPollingResult(res.counts || {Setuju:0,'Tidak Setuju':0,Abstain:0}, res.total || 0);
+      content.innerHTML = html;
+      openPollingModal('pollingUserModal');
+      return;
+    }
+
+    const familyResponse = res.familyResponse;
+    if (familyResponse) {
+      html += '<div class="polling-family-note">Keluarga Anda telah memberikan pendapatnya yaitu <b>' + escapeHtml(familyResponse) + '</b> dengan rencana/kebijakan RT.</div>';
+      html += '<div class="polling-choice-grid" style="margin-top:15px;">';
+      html += pollingChoiceButton('Setuju','fa-solid fa-thumbs-up',true);
+      html += pollingChoiceButton('Tidak Setuju','fa-solid fa-thumbs-down',true);
+      html += pollingChoiceButton('Abstain','fa-solid fa-minus',true);
+      html += '</div>';
+    } else if (poll.pollingAktif) {
+      html += '<div class="polling-choice-grid">';
+      html += pollingChoiceButton('Setuju','fa-solid fa-thumbs-up',false);
+      html += pollingChoiceButton('Tidak Setuju','fa-solid fa-thumbs-down',false);
+      html += pollingChoiceButton('Abstain','fa-solid fa-minus',false);
+      html += '</div>';
+    } else {
+      html += '<div class="polling-empty">Polling belum dibuka atau sudah berakhir.</div>';
+    }
+    content.innerHTML = html;
+    openPollingModal('pollingUserModal');
+
+    if (poll.batasWaktu && poll.pollingAktif && !poll.hasilAktif) {
+      startPollingCountdown(poll.batasWaktu);
+    }
+  }
+
+  function pollingChoiceButton(label, icon, disabled) {
+    let typeClass = '';
+    if (label === 'Setuju') typeClass = ' polling-choice-setuju';
+    else if (label === 'Tidak Setuju') typeClass = ' polling-choice-tidak';
+    else if (label === 'Abstain') typeClass = ' polling-choice-abstain';
+
+    return '<button class="polling-choice' + typeClass + '" type="button" ' + (disabled ? 'disabled' : '') + ' onclick="submitPollingChoice(\'' + label + '\')"><i class="' + icon + '"></i><span>' + label + '</span></button>';
+  }
+
+  function submitPollingChoice(answer) {
+    if (!currentPolling || !currentPolling.poll) return;
+    selectedPollingChoice = answer;
+    const confirmText = document.getElementById('pollingConfirmText');
+    if (confirmText) {
+      confirmText.innerHTML = 'Anda <b>' + escapeHtml(answer.toUpperCase()) + '</b> dengan rencana/kebijakan RT?';
+    }
+    openPollingModal('pollingConfirmModal');
+  }
+
+  function confirmSubmitPollingChoice() {
+    if (!currentPolling || !currentPolling.poll || !selectedPollingChoice) return;
+    const answer = selectedPollingChoice;
+    callAPI('pollingvote', { nik: currentUser.nik, pollId: currentPolling.poll.id, jawaban: answer }, function(res) {
+      if (res && res.success) {
+        closePollingModal('pollingConfirmModal');
+        closePollingModal('pollingUserModal');
+        loadPollingStatus(false);
+      } else {
+        closePollingModal('pollingConfirmModal');
+        showPollingToast(res && res.message ? res.message : 'Pendapat gagal disimpan.');
+      }
+    }, function() {
+      closePollingModal('pollingConfirmModal');
+      showPollingToast('Terjadi kesalahan koneksi saat menyimpan pendapat.');
+    });
+  }
+
+  function renderPollingResult(counts, total) {
+    const agree = Number(counts.Setuju || 0), disagree = Number(counts['Tidak Setuju'] || 0), abstain = Number(counts.Abstain || 0);
+    const safeTotal = agree + disagree + abstain;
+    const base = safeTotal || 1;
+    const p1 = agree / base * 100;
+    const p2 = (agree + disagree) / base * 100;
+    const p3 = (agree + disagree + abstain) / base * 100;
+    const pie = 'conic-gradient(#22c55e 0% ' + p1 + '%, #ef4444 ' + p1 + '% ' + p2 + '%, #94a3b8 ' + p2 + '% ' + p3 + '%)';
+    return '<div class="polling-result-title">Hasil Polling</div>' +
+      '<div class="polling-pie-wrap"><div class="polling-pie" style="background:' + pie + ';"></div></div>' +
+      '<div class="polling-legend">' +
+      pollingLegend('Setuju',agree,safeTotal,'#22c55e') +
+      pollingLegend('Tidak Setuju',disagree,safeTotal,'#ef4444') +
+      pollingLegend('Abstain',abstain,safeTotal,'#94a3b8') +
+      '</div><div class="polling-note" style="text-align:center;margin-top:10px;">Total pendapat: ' + safeTotal + '</div>';
+  }
+
+  function pollingLegend(label,count,total,color) {
+    const percent = total ? (count / total * 100) : 0;
+    return '<div class="polling-legend-row"><span class="polling-legend-left"><span class="polling-dot" style="background:' + color + '"></span>' + label + '</span><b>' + count + ' (' + percent.toFixed(1) + '%)</b></div>';
+  }
+
+  function formatPollingDate(value) {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return value;
+    return d.toLocaleString('id-ID', { day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const desc = document.getElementById('pollingDescription');
+    if (desc) desc.addEventListener('input', updatePollingCharCount);
+    ['pollingAdminModal','pollingUserModal','pollingConfirmModal'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', function(e) { if (e.target === el) closePollingModal(id); });
+    });
+  });
+
+  // ==========================================================
   // MENU LAINNYA
   // ==========================================================
   function toggleOtherFeatures() {
@@ -2245,6 +2743,11 @@
     document.getElementById('loginView').style.display = 'flex';
     closeAppPage(true);
     toggleSidebar(false);
+    closePollingModal('pollingAdminModal');
+    closePollingModal('pollingUserModal');
+    closePollingModal('pollingConfirmModal');
+    currentPolling = null;
+    currentPollingAdminId = '';
   }
 </script>
 </body>
