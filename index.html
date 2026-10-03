@@ -2394,7 +2394,7 @@
   function updatePollingButtonState(status) {
     const btn = document.getElementById('btnPolling');
     if (!btn) return;
-    const admin = currentUser.isAdmin === true;
+    const admin = currentUser.isDatabaseUser === true;
     const enabled = admin || (status && status.hasPolling && (status.poll && (status.poll.pollingAktif || status.poll.hasilAktif)));
     btn.classList.toggle('disabled', !enabled);
     btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
@@ -2418,7 +2418,7 @@
 
   function handlePollingClick() {
     if (!currentUser.nik) return;
-    if (currentUser.isAdmin) {
+    if (currentUser.isDatabaseUser) {
       openAdminPolling();
       return;
     }
