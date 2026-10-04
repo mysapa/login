@@ -906,6 +906,19 @@
       color: #808080;
       font-weight: 400;
     }
+    .footer-copy1 {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;          /* Memastikan teks tetap bisa ke tengah */
+      padding: 12px 20px;
+      text-align: center;
+      background: none;
+      box-sizing: border-box;
+      font-size: 11px;
+      color: #ffffff;
+      font-weight: 400;
+    }
     .spinner {
       border: 3px solid rgba(255,255,255,0.3);
       border-radius: 50%;
@@ -1218,9 +1231,166 @@
       width: 100%;
       padding: 8px 8px 2px;
     }
+
+    /* ================= LAYAR PEMBUKA SAPA ================= */
+    #sapaIntroScreen {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #003399 0%, #0072CE 60%, #46a3f0 100%);
+      z-index: 99999;
+      transform: translateX(0);
+      visibility: visible;
+      pointer-events: auto;
+      will-change: transform;
+      overflow: hidden;
+    }
+/* Pembungkus Utama Layar Pembuka */
+.sapa-intro-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;    /* Mengunci LOGO pas di tengah horizontal */
+  justify-content: center;/* Mengunci LOGO pas di tengah vertikal */
+  text-align: center;
+}
+
+/* LOGO - Konsisten di tengah layar secara mutlak */
+.sapa-intro-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  display: block;
+  margin: 0; /* Reset margin karena posisi sudah dikunci oleh Flexbox di atas */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+  
+  /* Fade-in + zoom lembut */
+  opacity: 0;
+  transform: scale(0.65);
+  animation: sapaLogoZoom 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+    @keyframes sapaLogoZoom {0% {opacity: 0; transform: scale(0.65); }
+    60% {opacity: 1; transform: scale(1.08); }
+    100% {opacity: 1; transform: scale(1); }
+    }
+
+/* Pembungkus Teks - Dibuat melayang di atas logo */
+.sapa-intro-title-wrapper {
+  position: absolute;
+  /* Rumus: Setengah tinggi layar (50%) dikurangi setengah ukuran logo (70px) dikurangi jarak 24px */
+  bottom: calc(50% + 70px + 48px); 
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* TITLE - Paling atas */
+.sapa-intro-title {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 26px;
+  line-height: 1.8;
+  font-weight: 700;
+  color: #ffffff;
+  animation: sapaTextAppear 0.8s ease-out 0.25s both;
+}
+
+/* SUBTITLE - Di bawah Title, menempel (jarak 0), dan berjarak 24px di atas logo */
+.sapa-intro-subtitle {
+  margin: 0; /* Jarak 0 dari Title */
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 0.8;
+  font-weight: 500;
+  color: #ffffff;
+  animation: sapaTextAppear 0.8s ease-out 0.25s both;
+} 
+    
+    #sapaIntroScreen.sapa-intro-hide {
+      transform: translateX(-100%);
+      pointer-events: none;
+      transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #sapaIntroScreen.sapa-intro-gone {
+      visibility: hidden;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #sapaIntroScreen.sapa-intro-hide {
+        transition-duration: 0.01ms;
+      }
+    }
   </style>
 </head>
-<body>
+<body> 
+<div id="sapaIntroScreen"
+     aria-hidden="true"
+     style="position:fixed;inset:0;width:100%;height:100%;background:#0072CE;z-index:2147483647;transform:translateX(0);visibility:visible;pointer-events:auto;will-change:transform;">
+
+  <div class="sapa-intro-content">
+    <div class="sapa-intro-title-wrapper">
+      <h1 class="sapa-intro-title">
+        Selamat Datang
+      </h1>
+      <p class="sapa-intro-subtitle">
+        Layanan digital untuk warga RT 09 Bonggoeya
+      </p>
+    </div>
+      <img
+        class="sapa-intro-logo"
+        src="https://res.cloudinary.com/q7sznixw/image/upload/v1791074027/Firefly_RemoveBackground_saeu0l.webp"
+        alt="Logo MySAPA">
+  </div>
+  <footer class="app-footer">
+    <div class="footer-copy1">
+      Powered by <strong>Anto</strong> Design Concept &copy; 2026
+    </div>
+  </footer>
+</div>
+<script>
+/* Pengendali intro terpisah dari script utama SAPA agar tetap bekerja
+   meskipun script aplikasi mengalami kesalahan. */
+(function () {
+  var intro = document.getElementById('sapaIntroScreen');
+  if (!intro) return;
+  var hidden = false;
+  window.SAPAIntroPendingRequests = 0;
+
+  function hideIntro() {
+    if (hidden) return;
+    hidden = true;
+    intro.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+    intro.style.transform = 'translateX(-100%)';
+    intro.style.pointerEvents = 'none';
+    window.setTimeout(function () {
+      intro.style.visibility = 'hidden';
+      intro.style.display = 'none';
+    }, 800);
+  }
+
+  function checkReady() {
+    if (hidden || document.readyState !== 'complete') return;
+    if (window.SAPAIntroPendingRequests > 0) return;
+    window.setTimeout(function () {
+      if (!hidden && document.readyState === 'complete' && window.SAPAIntroPendingRequests === 0) {
+        hideIntro();
+      }
+    }, 250);
+  }
+
+  window.sapaIntroTryHide = checkReady;
+  window.addEventListener('load', checkReady);
+  /* Failsafe mandiri: tidak bergantung pada script utama. */
+  window.setTimeout(hideIntro, 15000);
+})();
+</script>
 <div class="app-container">
   <!-- ================= 1. HALAMAN LOGIN ================= -->
   <div id="loginView" class="login-view">
@@ -1792,7 +1962,17 @@
   // ==========================================================
   // PEMANGGIL API JSONP
   // ==========================================================
+
+  // ==========================================================
+  // PELACAKAN PERMINTAAN UNTUK LAYAR PEMBUKA
+  // ==========================================================
+  function finishSapaIntroRequest() {
+    if (window.SAPAIntroPendingRequests > 0) window.SAPAIntroPendingRequests--;
+    if (typeof window.sapaIntroTryHide === 'function') window.sapaIntroTryHide();
+  }
+
   function callAPI(action, params, successCallback, errorCallback) {
+    window.SAPAIntroPendingRequests = (window.SAPAIntroPendingRequests || 0) + 1;
     const callbackName =
       'sapaCallback_' +
       Date.now() +
@@ -1824,14 +2004,20 @@
       } finally {
         delete window[callbackName];
         script.remove();
+        finishSapaIntroRequest();
       }
     };
     script.onerror = function() {
       if (finished) return;
+      finished = true;
       delete window[callbackName];
       script.remove();
-      if (errorCallback) {
-        errorCallback();
+      try {
+        if (errorCallback) {
+          errorCallback();
+        }
+      } finally {
+        finishSapaIntroRequest();
       }
     };
     script.src = url;
