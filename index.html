@@ -2350,7 +2350,7 @@ window.addEventListener('popstate', function(event) {
       backPressedOnce = true;
       
       // Berikan peringatan (bisa diganti dengan custom toast/notifikasi jika ada)
-      alert("Tekan sekali lagi untuk keluar"); 
+      showExitModal("Ingin keluar dari aplikasi?"); 
       
       // Dorong kembali state agar history tetap aman
       history.pushState({ page: 'dashboard' }, '');
