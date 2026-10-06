@@ -2209,7 +2209,6 @@
   }
     loadPollingStatus(false);
     history.pushState({ page: 'dashboard' }, '');
-    history.pushState({ page: 'dashboard' }, '');
   }
 
   // ==========================================================
@@ -2339,13 +2338,33 @@
   // ==========================================================
   // BROWSER BACK
   // ==========================================================
-  window.addEventListener('popstate', function() {
-    if (isSubPageOpen) {
-      closeAppPage(true);
-    } else if (document.getElementById('dashboardView').style.display === 'flex') {
+let backPressedOnce = false;
+
+window.addEventListener('popstate', function(event) {
+  if (isSubPageOpen) {
+    // Jika sedang membuka sub-halaman/modal, tutup sub-halamannya
+    closeAppPage(true);
+  } else if (document.getElementById('dashboardView').style.display === 'flex') {
+    // Jika berada di Dashboard
+    if (!backPressedOnce) {
+      backPressedOnce = true;
+      
+      // Berikan peringatan (bisa diganti dengan custom toast/notifikasi jika ada)
+      alert("Tekan sekali lagi untuk keluar"); 
+      
+      // Dorong kembali state agar history tetap aman
       history.pushState({ page: 'dashboard' }, '');
+
+      // Reset status kembali dalam 2 detik
+      setTimeout(function() {
+        backPressedOnce = false;
+      }, 2000);
+    } else {
+      // Jika ditekan 2 kali dalam rentang waktu 2 detik, izinkan keluar
+      window.history.back();
     }
-  });
+  }
+});
   
   // ==========================================================
   // ADMIN
