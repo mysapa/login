@@ -2234,6 +2234,7 @@
     }
     document.getElementById('subPageView')
       .classList.add('active');
+    document.getElementById('bottomNavbar').style.display = 'none';
   }
 
   function closeSubpage() {
@@ -2290,6 +2291,7 @@
     iframe.src = targetUrl;
     document.getElementById('subPageView')
       .classList.add('active');
+    document.getElementById('bottomNavbar').style.display = 'none';
     if (!isSubPageOpen) {
       isSubPageOpen = true;
       history.pushState(
@@ -2320,6 +2322,7 @@
       return;
     }
     subPage.classList.remove('active');
+    document.getElementById('bottomNavbar').style.display = 'grid';
     setTimeout(function() {
       document.getElementById('subPageIframe')
         .src = 'about:blank';
