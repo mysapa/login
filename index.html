@@ -2208,7 +2208,20 @@
     );
   }
     loadPollingStatus(false);
-    history.pushState({ page: 'dashboard' }, '');
+    // Pengaman tombol back: beberapa entri history agar back di HP
+    // tidak keluar dari aplikasi saat berada di dashboard
+    pushDashboardBackGuard(DASHBOARD_BACK_GUARD_DEPTH);
+  }
+
+  // ==========================================================
+  // PENGAMAN TOMBOL BACK DI DASHBOARD
+  // ==========================================================
+  const DASHBOARD_BACK_GUARD_DEPTH = 3;
+
+  function pushDashboardBackGuard(count) {
+    for (let i = 0; i < count; i++) {
+      history.pushState({ page: 'dashboard' }, '');
+    }
   }
 
   // ==========================================================
@@ -2344,10 +2357,8 @@
         document.getElementById('dashboardView')
           .style.display === 'flex'
       ) {
-        history.pushState(
-          { page: 'dashboard' },
-          ''
-        );
+        // Tombol back ditekan di dashboard: tahan di halaman ini
+        pushDashboardBackGuard(1);
       }
     }
   );
