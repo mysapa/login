@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>MySAPA - RT 09 Digital Service System</title>
+  <title>SAPA - RT 09 Digital Service System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -2144,7 +2144,6 @@
         );
       }
     );
-    document.getElementById('bottomNavbar').style.display = 'none';
   }
 
   // ==========================================================
@@ -2164,7 +2163,7 @@
   function enterDashboard() {
     document.getElementById('loginView').style.display = 'none';
     document.getElementById('dashboardView').style.display = 'flex';
- 
+    
     const bottomNav = document.getElementById('bottomNavbar');
     if (bottomNav) {
       bottomNav.style.display = 'grid';
@@ -2235,7 +2234,6 @@
     }
     document.getElementById('subPageView')
       .classList.add('active');
-    document.getElementById('bottomNavbar').style.display = 'none';
   }
 
   function closeSubpage() {
@@ -2292,7 +2290,6 @@
     iframe.src = targetUrl;
     document.getElementById('subPageView')
       .classList.add('active');
-    document.getElementById('bottomNavbar').style.display = 'none';
     if (!isSubPageOpen) {
       isSubPageOpen = true;
       history.pushState(
@@ -2323,7 +2320,6 @@
       return;
     }
     subPage.classList.remove('active');
-    document.getElementById('bottomNavbar').style.display = 'grid';
     setTimeout(function() {
       document.getElementById('subPageIframe')
         .src = 'about:blank';
@@ -2339,14 +2335,23 @@
   // ==========================================================
   // BROWSER BACK
   // ==========================================================
-window.addEventListener('popstate', function(event) {
-  if (isSubPageOpen) {
-    closeAppPage(true);
-  } else if (document.getElementById('dashboardView').style.display === 'flex') {
-      history.pushState({ page: 'dashboard' }, '');
-  }
-});
-  
+  window.addEventListener(
+    'popstate',
+    function() {
+      if (isSubPageOpen) {
+        closeAppPage(true);
+      } else if (
+        document.getElementById('dashboardView')
+          .style.display === 'flex'
+      ) {
+        history.pushState(
+          { page: 'dashboard' },
+          ''
+        );
+      }
+    }
+  );
+
   // ==========================================================
   // ADMIN
   // ==========================================================
