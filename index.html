@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>SAPA - RT 09 Digital Service System</title>
+  <title>MySAPA - RT 09 Digital Service System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -2163,6 +2163,8 @@
   function enterDashboard() {
     document.getElementById('loginView').style.display = 'none';
     document.getElementById('dashboardView').style.display = 'flex';
+    
+    history.replaceState({ page: 'dashboard' }, '' );
     
     const bottomNav = document.getElementById('bottomNavbar');
     if (bottomNav) {
