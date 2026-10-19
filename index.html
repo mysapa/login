@@ -78,45 +78,57 @@
       font-size: 12px;
       font-weight: 600;
       color: #0072CE;
-      margin: 8px 0;
+      margin-bottom: 12px;
     }
     .login-card {
       width: 100%;
       max-width: 420px;
-      padding: 16px 36px;
+      padding: 0 36px 16px;
       color: #1e293b;
       text-align: left;
       z-index: 10;
     }
     @media (min-width: 576px) {
       .login-card {
-        padding: 32px 28px;
+        padding: 0 28px 32px;
         border-radius: 24px;
       }
     }
     .form-group {
       margin-bottom: 18px;
     }
-    .form-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #0072CE;
-      color: #ffffff;
-      padding: 8px 24px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .login-label-row {
+    .login-intro {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0072CE;
+      white-space: nowrap;
+    }
+    .login-intro::before,
+    .login-intro::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      border-radius: 2px;
+    }
+    .login-intro::before {
+      background: linear-gradient(90deg, rgba(0,114,206,0), #0072CE);
+    }
+    .login-intro::after {
+      background: linear-gradient(270deg, rgba(0,114,206,0), #0072CE);
+    }
+    .login-action-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .btn-login-faq {
       width: 38px;
       height: 38px;
+      flex: 0 0 38px;
       border: none;
       border-radius: 12px;
       background: #0072CE;
@@ -167,7 +179,8 @@
       opacity: 1;
     }
     .btn-primary {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
       padding: 14px;
       background: linear-gradient(135deg,#0284c7 0%,#0369a1 100%);
       color: #ffffff;
@@ -200,18 +213,9 @@
       align-items: center;
       gap: 8px;
     }
-    .login-divider {
-      text-align: center;
-      margin: 24px 0 14px;
-    }
-    .login-divider span {
-      font-size: 13px;
-      font-weight: 700;
-      color: #16A34A;
-      letter-spacing: 0.5px;
-    }
     .btn-absen-ronda {
       width: 100%;
+      margin-top: 12px;
       padding: 10px 12px;
       background: linear-gradient(135deg,#10b981 0%,#047857 100%);
       color: #ffffff;
@@ -561,7 +565,6 @@
     .bg-dbase { background:#cffaff; color:#0891b2; }
     .bg-pbb { background:#d1fae5; color:#059669; }
     .bg-tanya { background:#ffedd5; color:#ea580c; }
-    .bg-pemkot { background:#e0f2fe; color:#0284c7; }
     .bg-polri { background:#fef3c7; color:#d97706; }
     .bg-pln { background:#fef9c3; color:#ca8a04; }
     .bg-damkar { background:#ffe4e6; color:#e11d48; }
@@ -1329,9 +1332,11 @@
     .emergency-menu-inner {
       min-height: 0;
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 4px;
       width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
       padding: 8px 8px 2px;
     }
 
@@ -1467,23 +1472,11 @@
       <img id="loginHeaderImg" alt="Header Login">
     </div>
     <div class="welcome-text-medium">
-      SISTEM INFORMASI DAN PELAYANAN ADMINISTRASI
+      Layanan digital untuk warga RT 09 Bonggoeya
     </div>
     <div class="login-card">
+      <label class="login-intro" for="nikInput">Silakan login dengan NIK Anda</label>
       <div class="form-group">
-        <div class="login-label-row">
-          <label class="form-label" for="nikInput">
-            <i class="fa-solid fa-lock"></i> Login
-          </label>
-          <button
-            type="button"
-            class="btn-login-faq"
-            onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)"
-            title="FAQ"
-            aria-label="FAQ">
-            <i class="fa-solid fa-circle-question"></i>
-          </button>
-        </div>
         <div class="input-wrapper">
           <i class="fa-solid fa-id-card"></i>
           <input
@@ -1495,20 +1488,24 @@
             onkeypress="handleKeyPress(event)">
         </div>
       </div>
-      <button id="btnLogin" class="btn-primary" onclick="processLogin()">
-        <span id="btnText">Masuk</span>
-        <i id="btnIcon" class="fa-solid fa-right-to-bracket"></i>
-        <div id="btnSpinner" class="spinner" style="display:none;"></div>
-      </button>
+      <div class="login-action-row">
+        <button
+          type="button"
+          class="btn-login-faq"
+          onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)"
+          title="FAQ"
+          aria-label="FAQ">
+          <i class="fa-solid fa-circle-question"></i>
+        </button>
+        <button id="btnLogin" class="btn-primary" onclick="processLogin()">
+          <span id="btnText">Masuk</span>
+          <i id="btnIcon" class="fa-solid fa-right-to-bracket"></i>
+          <div id="btnSpinner" class="spinner" style="display:none;"></div>
+        </button>
+      </div>
       <div id="loginError" class="alert-danger" style="display:none;">
         <i class="fa-solid fa-circle-exclamation"></i>
         <span id="errorMsg">NIK tidak ditemukan.</span>
-      </div>
-      <div class="login-divider">
-        <span>
-          <i class="fa-solid fa-bolt"></i>
-          Quick Access
-        </span>
       </div>
       <button class="btn-absen-ronda" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
         <div class="ronda-btn-left">
@@ -1554,18 +1551,7 @@
             </div>
             <span class="menu-label">PLN</span>
           </a>
-          <a href="tel:112" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-pemkot">
-              <img
-                src="https://drive.google.com/thumbnail?id=1RBXqK7wF1Ht60-KArWBfcDXGYTAllPgL"
-                alt="Pemkot Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-building-flag" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Pemkot</span>
-          </a>
-          <a href="https://wa.me/" target="_blank" rel="noopener" class="menu-item" style="text-decoration:none;">
+          <a id="btnDamkar" href="tel:+6282311173113" class="menu-item" style="text-decoration:none;">
             <div class="menu-icon-box bg-damkar">
               <img
                 src="https://drive.google.com/thumbnail?id=1dndffo1XK-ETrpCFw2wWK82vMtOHmh98"
@@ -1635,7 +1621,7 @@
         <div class="surat-info">
           <div class="surat-title">Surat Pengantar RT</div>
           <div class="surat-desc">
-            Pengajuan surat dilakukan secara online, cepat, dan mandiri.
+            Pengajuan surat dilakukan secara online, cepat,dan mandiri.
           </div>
         </div>
         <button
@@ -1960,6 +1946,10 @@
   // ==========================================================
   const API_URL =
     'https://script.google.com/macros/s/AKfycbx2EDwltmwL0w_CzOnjAqRHltkL3qnyIo6jhHc6QX7PMpRQSxqLgSCE1XAgiZoIMisBJA/exec';
+
+  // Nomor WhatsApp Damkar (boleh format 08xxxxxxxxxx atau 628xxxxxxxxxx).
+  // Selama masih kosong, tombol Damkar menelepon 113 (nomor darurat pemadam kebakaran).
+  const DAMKAR_WA = '';
 
   const BASE_URLS = {
     dataPribadi: "https://script.google.com/macros/s/AKfycbzF3aQi0d4Ue0HfEQzQdvZBaOl7VLaGBK5UJePUwzZe9n_xsqfHvBoeyrRZouV-U_tC/exec",
@@ -2754,6 +2744,16 @@
     loadGallery('profil', 'imageGallery', 'gallery-card', 'Informasi', 'Tidak ada informasi data ditemukan.');
     loadGallery('standar', 'imageGallerySP', 'gallery-card-sp', 'Standar Pelayanan', 'Tidak ada data standar pelayanan.');
     loadLoginHeaderImage();
+
+    // Tombol Damkar: buka chat WhatsApp jika nomor sudah diisi
+    const damkar = document.getElementById('btnDamkar');
+    const damkarNumber = DAMKAR_WA.replace(/\D/g, '').replace(/^0/, '62');
+    if (damkar && damkarNumber) {
+      damkar.href = 'https://wa.me/' + damkarNumber + '?text=' +
+        encodeURIComponent('Halo Damkar Kendari, mohon bantuan: ');
+      damkar.target = '_blank';
+      damkar.rel = 'noopener';
+    }
 
     const desc = document.getElementById('pollingDescription');
     if (desc) desc.addEventListener('input', updatePollingCharCount);
