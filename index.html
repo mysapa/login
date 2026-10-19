@@ -122,13 +122,13 @@
     }
     .login-action-row {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       gap: 8px;
     }
     .btn-login-faq {
-      width: 38px;
-      height: 38px;
-      flex: 0 0 38px;
+      width: 46px;
+      flex: 0 0 46px;
+      align-self: stretch;
       border: none;
       border-radius: 12px;
       background: #0072CE;
@@ -1329,15 +1329,30 @@
       grid-template-rows: 1fr;
       opacity: 1;
     }
+    /* Ikon paling kiri (Polres) & paling kanan (Ambulans) sejajar dengan tepi
+       tombol "Absen Ronda Malam" (padding .login-card dikurangi 6px padding item) */
     .emergency-menu-inner {
       min-height: 0;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 60px);
+      justify-content: space-between;
       gap: 4px;
       width: 100%;
       max-width: 420px;
       margin: 0 auto;
-      padding: 8px 8px 2px;
+      padding: 8px 30px 2px;
+    }
+    @media (min-width: 576px) {
+      .emergency-menu-inner {
+        padding: 8px 22px 2px;
+      }
+    }
+    .emergency-menu-inner .menu-item {
+      width: 60px;
+      padding: 14px 6px;
+    }
+    .emergency-menu-inner .menu-label {
+      white-space: nowrap;
     }
 
     /* ================= LAYAR PEMBUKA SAPA ================= */
@@ -1471,9 +1486,6 @@
     <div id="loginHeaderContainer" class="login-header-banner">
       <img id="loginHeaderImg" alt="Header Login">
     </div>
-    <div class="welcome-text-medium">
-      Layanan digital untuk warga RT 09 Bonggoeya
-    </div>
     <div class="login-card">
       <label class="login-intro" for="nikInput">Silakan login dengan NIK Anda</label>
       <div class="form-group">
@@ -1551,7 +1563,7 @@
             </div>
             <span class="menu-label">PLN</span>
           </a>
-          <a id="btnDamkar" href="tel:+6282311173113" class="menu-item" style="text-decoration:none;">
+          <a id="btnDamkar" href="https://wa.me/6282311173113?text=Halo%20Damkar%20Kendari%2C%20mohon%20bantuan%3A%20" target="_blank" rel="noopener" class="menu-item" style="text-decoration:none;">
             <div class="menu-icon-box bg-damkar">
               <img
                 src="https://drive.google.com/thumbnail?id=1dndffo1XK-ETrpCFw2wWK82vMtOHmh98"
@@ -1946,10 +1958,6 @@
   // ==========================================================
   const API_URL =
     'https://script.google.com/macros/s/AKfycbx2EDwltmwL0w_CzOnjAqRHltkL3qnyIo6jhHc6QX7PMpRQSxqLgSCE1XAgiZoIMisBJA/exec';
-
-  // Nomor WhatsApp Damkar (boleh format 08xxxxxxxxxx atau 628xxxxxxxxxx).
-  // Selama masih kosong, tombol Damkar menelepon 113 (nomor darurat pemadam kebakaran).
-  const DAMKAR_WA = '';
 
   const BASE_URLS = {
     dataPribadi: "https://script.google.com/macros/s/AKfycbzF3aQi0d4Ue0HfEQzQdvZBaOl7VLaGBK5UJePUwzZe9n_xsqfHvBoeyrRZouV-U_tC/exec",
@@ -2744,16 +2752,6 @@
     loadGallery('profil', 'imageGallery', 'gallery-card', 'Informasi', 'Tidak ada informasi data ditemukan.');
     loadGallery('standar', 'imageGallerySP', 'gallery-card-sp', 'Standar Pelayanan', 'Tidak ada data standar pelayanan.');
     loadLoginHeaderImage();
-
-    // Tombol Damkar: buka chat WhatsApp jika nomor sudah diisi
-    const damkar = document.getElementById('btnDamkar');
-    const damkarNumber = DAMKAR_WA.replace(/\D/g, '').replace(/^0/, '62');
-    if (damkar && damkarNumber) {
-      damkar.href = 'https://wa.me/' + damkarNumber + '?text=' +
-        encodeURIComponent('Halo Damkar Kendari, mohon bantuan: ');
-      damkar.target = '_blank';
-      damkar.rel = 'noopener';
-    }
 
     const desc = document.getElementById('pollingDescription');
     if (desc) desc.addEventListener('input', updatePollingCharCount);
