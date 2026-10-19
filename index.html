@@ -74,16 +74,10 @@
       transform: rotate(25deg);
       pointer-events: none;
     }
-    .welcome-text-medium {
-      font-size: 12px;
-      font-weight: 600;
-      color: #0072CE;
-      margin-bottom: 12px;
-    }
     .login-card {
       width: 100%;
       max-width: 420px;
-      padding: 14px 36px 16px;
+      padding: 0 36px 16px;
       color: #1e293b;
       text-align: left;
       z-index: 10;
@@ -101,7 +95,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin: 12px 0;
       font-size: 12.5px;
       font-weight: 700;
       color: #0072CE;
@@ -119,30 +113,6 @@
     }
     .login-intro::after {
       background: linear-gradient(270deg, rgba(0,114,206,0), #0072CE);
-    }
-    .login-action-row {
-      display: flex;
-      align-items: stretch;
-      gap: 8px;
-    }
-    .btn-login-faq {
-      width: 46px;
-      flex: 0 0 46px;
-      align-self: stretch;
-      border: none;
-      border-radius: 12px;
-      background: #0072CE;
-      color: #ffffff;
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-    .btn-login-faq:hover {
-      background: #005ba8;
-      transform: translateY(-1px);
     }
     .input-wrapper {
       position: relative;
@@ -179,9 +149,9 @@
       opacity: 1;
     }
     .btn-primary {
-      flex: 1;
-      min-width: 0;
-      padding: 14px;
+      width: 100%;
+      height: 38px;
+      padding: 0 14px;
       background: linear-gradient(135deg,#0284c7 0%,#0369a1 100%);
       color: #ffffff;
       border: none;
@@ -212,42 +182,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-    .btn-absen-ronda {
-      width: 100%;
-      margin-top: 12px;
-      padding: 10px 12px;
-      background: linear-gradient(135deg,#10b981 0%,#047857 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 6px 18px rgba(16,185,129,0.3);
-      transition: all 0.2s ease;
-    }
-    .btn-absen-ronda:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(16,185,129,0.4);
-    }
-    .ronda-btn-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .ronda-icon-glow {
-      width: 28px;
-      height: 28px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
     }
 
     /* HEADER LOGIN */
@@ -565,6 +499,7 @@
     .bg-dbase { background:#cffaff; color:#0891b2; }
     .bg-pbb { background:#d1fae5; color:#059669; }
     .bg-tanya { background:#ffedd5; color:#ea580c; }
+    .bg-pemkot { background:#e0f2fe; color:#0284c7; }
     .bg-polri { background:#fef3c7; color:#d97706; }
     .bg-pln { background:#fef9c3; color:#ca8a04; }
     .bg-damkar { background:#ffe4e6; color:#e11d48; }
@@ -1279,80 +1214,62 @@
       .bday-piece, .bday-balloon, .bday-spark { display: none; }
     }
 
-    /* ================= PANGGILAN DARURAT ================= */
-    .emergency-section {
+    /* ================= FITUR CEPAT ================= */
+    .quick-section {
       width: 100%;
-      margin: 4px 0 0;
+      max-width: 460px;
+      margin: 4px auto 0;
       overflow: hidden;
     }
-    .emergency-header {
-      width: 100%;
+    .quick-title {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      padding: 8px 4px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .emergency-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #dc2626;
-    }
-    .emergency-title i,
-    #emergencyArrow {
-      color: #dc2626;
-      font-size: 14px;
-    }
-    #emergencyArrow {
+      gap: 8px;
+      padding: 6px 4px;
+      font-size: 15px;
       font-weight: 700;
-      transition: transform 0.25s ease;
+      color: #051937;
     }
-    #emergencyArrow.open {
-      transform: rotate(180deg);
+    .quick-title i {
+      color: #f59e0b;
+      font-size: 15px;
     }
-    .emergency-menu {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition:
-        grid-template-rows 0.35s cubic-bezier(0.4,0,0.2,1),
-        opacity 0.35s ease;
+    .quick-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 16px 4px;
+      scroll-snap-type: x proximity;
+      scroll-padding: 0 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .quick-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .quick-scroll .menu-item {
+      flex: 0 0 78px;
+      scroll-snap-align: start;
+      text-decoration: none;
+    }
+    .quick-indicator {
+      position: relative;
+      width: 72px;
+      height: 4px;
+      margin: 6px auto 0;
+      border-radius: 4px;
+      background: #e2e8f0;
       overflow: hidden;
-      opacity: 0;
     }
-    .emergency-menu.show {
-      grid-template-rows: 1fr;
-      opacity: 1;
-    }
-    /* Ikon paling kiri (Polres) & paling kanan (Ambulans) sejajar dengan tepi
-       tombol "Absen Ronda Malam" (padding .login-card dikurangi 6px padding item) */
-    .emergency-menu-inner {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: repeat(4, 60px);
-      justify-content: space-between;
-      gap: 4px;
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 8px 30px 2px;
-    }
-    @media (min-width: 576px) {
-      .emergency-menu-inner {
-        padding: 8px 22px 2px;
-      }
-    }
-    .emergency-menu-inner .menu-item {
-      width: 60px;
-      padding: 14px 6px;
-    }
-    .emergency-menu-inner .menu-label {
-      white-space: nowrap;
+    .quick-thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 40%;
+      border-radius: 4px;
+      background: #0072CE;
     }
 
     /* ================= LAYAR PEMBUKA SAPA ================= */
@@ -1500,92 +1417,90 @@
             onkeypress="handleKeyPress(event)">
         </div>
       </div>
-      <div class="login-action-row">
-        <button
-          type="button"
-          class="btn-login-faq"
-          onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)"
-          title="FAQ"
-          aria-label="FAQ">
-          <i class="fa-solid fa-circle-question"></i>
-        </button>
-        <button id="btnLogin" class="btn-primary" onclick="processLogin()">
-          <span id="btnText">Masuk</span>
-          <i id="btnIcon" class="fa-solid fa-right-to-bracket"></i>
-          <div id="btnSpinner" class="spinner" style="display:none;"></div>
-        </button>
-      </div>
+      <button id="btnLogin" class="btn-primary" onclick="processLogin()">
+        <span id="btnText">Masuk</span>
+        <i id="btnIcon" class="fa-solid fa-right-to-bracket"></i>
+        <div id="btnSpinner" class="spinner" style="display:none;"></div>
+      </button>
       <div id="loginError" class="alert-danger" style="display:none;">
         <i class="fa-solid fa-circle-exclamation"></i>
         <span id="errorMsg">NIK tidak ditemukan.</span>
       </div>
-      <button class="btn-absen-ronda" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
-        <div class="ronda-btn-left">
-          <div class="ronda-icon-glow">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-          <span>Absen Ronda Malam</span>
-        </div>
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
     </div>
 
-    <!-- PANGGILAN DARURAT & FOOTER -->
-    <section class="emergency-section">
-      <div class="emergency-header" onclick="toggleEmergencyMenu()">
-        <div class="emergency-title">
-          <i class="fa-solid fa-phone-volume"></i>
-          <span style="text-decoration:underline;">Panggilan Darurat</span>
-        </div>
-        <i id="emergencyArrow" class="fa-solid fa-chevron-down"></i>
+    <!-- FITUR CEPAT & FOOTER -->
+    <section class="quick-section">
+      <div class="quick-title">
+        <span>Fitur Cepat</span>
+        <i class="fa-solid fa-bolt"></i>
       </div>
-      <div id="emergencyMenu" class="emergency-menu">
-        <div class="emergency-menu-inner">
-          <a href="tel:110" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-polri">
-              <img
-                src="https://drive.google.com/thumbnail?id=1fx4m8s6V8xVdJA88ZitWnrqGuQn4T5Lf"
-                alt="Polresta Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-shield-cat" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Polres</span>
-          </a>
-          <a href="tel:0401123" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-pln">
-              <img
-                src="https://drive.google.com/thumbnail?id=1wZjFl1ZPyuNYbqJg7bBnTEjpHashH3WR"
-                alt="PLN Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-bolt" style="display:none;"></i>
-            </div>
-            <span class="menu-label">PLN</span>
-          </a>
-          <a id="btnDamkar" href="https://wa.me/6282311173113?text=Halo%20Damkar%20Kendari%2C%20mohon%20bantuan%3A%20" target="_blank" rel="noopener" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-damkar">
-              <img
-                src="https://drive.google.com/thumbnail?id=1dndffo1XK-ETrpCFw2wWK82vMtOHmh98"
-                alt="Damkar Kendari"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-fire-extinguisher" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Damkar</span>
-          </a>
-          <a href="tel:+6282311173113" class="menu-item" style="text-decoration:none;">
-            <div class="menu-icon-box bg-ambulans">
-              <img
-                src="https://drive.google.com/thumbnail?id=1kkgUs6iGCFCx0LvvU6nDKGB1nrE2fNtV"
-                alt="Ambulans ASR"
-                style="width:28px;height:28px;object-fit:contain;"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-              <i class="fa-solid fa-truck-medical" style="display:none;"></i>
-            </div>
-            <span class="menu-label">Ambulans</span>
-          </a>
+      <div id="quickScroll" class="quick-scroll">
+        <div class="menu-item" onclick="openAppPage('Tanya Jawab', BASE_URLS.tanyaJawab)">
+          <div class="menu-icon-box bg-tanya"><i class="fa-solid fa-comments"></i></div>
+          <span class="menu-label">FAQ</span>
         </div>
+        <div class="menu-item" onclick="openAppPage('Ronda Malam', BASE_URLS.ronda)">
+          <div class="menu-icon-box bg-ronda"><i class="fa-solid fa-shield-halved"></i></div>
+          <span class="menu-label">Absen Ronda</span>
+        </div>
+        <a href="tel:112" class="menu-item">
+          <div class="menu-icon-box bg-pemkot">
+            <img
+              src="https://drive.google.com/thumbnail?id=1RBXqK7wF1Ht60-KArWBfcDXGYTAllPgL"
+              alt="Pemkot Kendari"
+              style="width:28px;height:28px;object-fit:contain;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <i class="fa-solid fa-building-flag" style="display:none;"></i>
+          </div>
+          <span class="menu-label">Pemkot</span>
+        </a>
+        <a href="tel:110" class="menu-item">
+          <div class="menu-icon-box bg-polri">
+            <img
+              src="https://drive.google.com/thumbnail?id=1fx4m8s6V8xVdJA88ZitWnrqGuQn4T5Lf"
+              alt="Polresta Kendari"
+              style="width:28px;height:28px;object-fit:contain;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <i class="fa-solid fa-shield-cat" style="display:none;"></i>
+          </div>
+          <span class="menu-label">Polres</span>
+        </a>
+        <a href="tel:0401123" class="menu-item">
+          <div class="menu-icon-box bg-pln">
+            <img
+              src="https://drive.google.com/thumbnail?id=1wZjFl1ZPyuNYbqJg7bBnTEjpHashH3WR"
+              alt="PLN Kendari"
+              style="width:28px;height:28px;object-fit:contain;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <i class="fa-solid fa-bolt" style="display:none;"></i>
+          </div>
+          <span class="menu-label">PLN</span>
+        </a>
+        <a href="https://wa.me/6282311173113" target="_blank" rel="noopener" class="menu-item">
+          <div class="menu-icon-box bg-damkar">
+            <img
+              src="https://drive.google.com/thumbnail?id=1dndffo1XK-ETrpCFw2wWK82vMtOHmh98"
+              alt="Damkar Kendari"
+              style="width:28px;height:28px;object-fit:contain;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <i class="fa-solid fa-fire-extinguisher" style="display:none;"></i>
+          </div>
+          <span class="menu-label">Damkar</span>
+        </a>
+        <a href="tel:+6282311173113" class="menu-item">
+          <div class="menu-icon-box bg-ambulans">
+            <img
+              src="https://drive.google.com/thumbnail?id=1kkgUs6iGCFCx0LvvU6nDKGB1nrE2fNtV"
+              alt="Ambulans ASR"
+              style="width:28px;height:28px;object-fit:contain;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <i class="fa-solid fa-truck-medical" style="display:none;"></i>
+          </div>
+          <span class="menu-label">Ambulans</span>
+        </a>
+      </div>
+      <div id="quickIndicator" class="quick-indicator">
+        <div id="quickThumb" class="quick-thumb"></div>
       </div>
       <footer class="app-footer">
         <div class="footer-copy">
@@ -1951,7 +1866,6 @@
     </button>
   </div>
 </div>
-
 <script>
   // ==========================================================
   // KONFIGURASI
@@ -2065,6 +1979,23 @@
   function setMenuHidden(id, hidden) {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('menu-item-hidden', hidden);
+  }
+
+  // Penanda scroll Fitur Cepat (halaman login)
+  function updateQuickIndicator() {
+    const sc = document.getElementById('quickScroll');
+    const bar = document.getElementById('quickIndicator');
+    const thumb = document.getElementById('quickThumb');
+    if (!sc || !bar || !thumb || sc.clientWidth === 0) return;
+    const overflow = sc.scrollWidth - sc.clientWidth;
+    if (overflow <= 1) {
+      bar.style.visibility = 'hidden';
+      return;
+    }
+    bar.style.visibility = 'visible';
+    const widthPct = Math.max(sc.clientWidth / sc.scrollWidth * 100, 15);
+    thumb.style.width = widthPct + '%';
+    thumb.style.left = (sc.scrollLeft / overflow * (100 - widthPct)) + '%';
   }
 
   // ==========================================================
@@ -2256,6 +2187,7 @@
     document.getElementById('dashboardView').style.display = 'none';
     document.getElementById('bottomNavbar').style.display = 'none';
     document.getElementById('loginView').style.display = 'flex';
+    updateQuickIndicator();
 
     // Kembalikan tombol Polling ke keadaan terkunci untuk sesi berikutnya
     const btnPolling = document.getElementById('btnPolling');
@@ -2273,11 +2205,6 @@
     const isOpen = document.getElementById('otherFeaturesMenu').classList.toggle('show');
     document.getElementById('otherFeaturesIcon').classList.toggle('open');
     document.getElementById('otherFeaturesText').textContent = isOpen ? 'Sembunyikan' : 'Lainnya';
-  }
-
-  function toggleEmergencyMenu() {
-    document.getElementById('emergencyMenu').classList.toggle('show');
-    document.getElementById('emergencyArrow').classList.toggle('open');
   }
 
   // ==========================================================
@@ -2752,6 +2679,13 @@
     loadGallery('profil', 'imageGallery', 'gallery-card', 'Informasi', 'Tidak ada informasi data ditemukan.');
     loadGallery('standar', 'imageGallerySP', 'gallery-card-sp', 'Standar Pelayanan', 'Tidak ada data standar pelayanan.');
     loadLoginHeaderImage();
+
+    // Penanda scroll Fitur Cepat
+    const quick = document.getElementById('quickScroll');
+    if (quick) quick.addEventListener('scroll', updateQuickIndicator, { passive: true });
+    window.addEventListener('resize', updateQuickIndicator);
+    window.addEventListener('load', updateQuickIndicator);
+    updateQuickIndicator();
 
     const desc = document.getElementById('pollingDescription');
     if (desc) desc.addEventListener('input', updatePollingCharCount);
