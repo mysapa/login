@@ -89,7 +89,7 @@
       }
     }
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 10px;
     }
     .login-intro {
       display: flex;
@@ -1615,9 +1615,9 @@
       <!-- MENU LAINNYA -->
       <div id="otherFeaturesMenu" class="other-features-menu">
         <div class="other-features-inner">
-        <div id="btnPbb" class="menu-item" onclick="openAppPage('ePBB', BASE_URLS.pbb)">
-          <div class="menu-icon-box bg-pbb"><i class="fa-solid fa-money-bill-wave"></i></div>
-          <span class="menu-label">e-PBB</span>
+        <div id="btnMyData" class="menu-item" onclick="openAppPage('Data Pribadi', BASE_URLS.dataPribadi)">
+          <div class="menu-icon-box bg-pbb"><i class="fa-solid fa-id-badge"></i></div>
+          <span class="menu-label">MyData</span>
         </div>
           <div id="btnAdmin" class="menu-item" onclick="handleAdminClick()">
             <div class="menu-icon-box bg-admin">
@@ -2085,7 +2085,7 @@
     // Visibilitas menu berdasarkan role
     setMenuHidden('btnAdmin', !currentUser.isAdmin);            // Admin: hanya untuk Admin
     setMenuHidden('btnDatabase', !currentUser.isDatabaseUser);  // Database: hanya untuk DatabaseUser
-    setMenuHidden('btnPbb', currentUser.isAdmin);               // ePBB: disembunyikan untuk Admin
+    setMenuHidden('btnMyData', currentUser.isAdmin || currentUser.isDatabaseUser); // MyData: hanya untuk user biasa
     setMenuHidden('btnFaq', currentUser.isDatabaseUser);        // FAQ: disembunyikan untuk DatabaseUser
 
     loadPollingStatus(false);
