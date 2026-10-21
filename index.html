@@ -142,6 +142,22 @@
       background: #ffffff;
       box-shadow: 0 0 0 4px rgba(2,132,199,0.15);
     }
+    #nikInput { padding-right: 48px; }
+    .input-wrapper .eye-toggle {
+      position: absolute;
+      right: 6px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-wrapper .eye-toggle i { position: static; color: inherit; }
     #nikInput::placeholder {
       font-size: 14px;
       font-weight: 400;
@@ -1410,12 +1426,18 @@
         <div class="input-wrapper">
           <i class="fa-solid fa-id-card"></i>
           <input
-            type="number"
+            type="password"
+            inputmode="numeric"
+            maxlength="16"
             id="nikInput"
             class="form-control"
             placeholder="Ketik 16 digit NIK Anda"
             autocomplete="off"
+            oninput="this.value=this.value.replace(/\D/g,'')"
             onkeypress="handleKeyPress(event)">
+          <button type="button" id="btnEyeNik" class="eye-toggle" onclick="toggleNikVisibility()" aria-label="Tampilkan/sembunyikan NIK">
+            <i class="fa-solid fa-eye"></i>
+          </button>
         </div>
       </div>
       <button id="btnLogin" class="btn-primary" onclick="processLogin()">
@@ -2008,6 +2030,22 @@
     if (event.key === 'Enter') processLogin();
   }
 
+  // Tampil / sembunyikan input NIK (default: tersembunyi)
+  function setNikVisible(show) {
+    const input = document.getElementById('nikInput');
+    const btn = document.getElementById('btnEyeNik');
+    input.type = show ? 'text' : 'password';
+    btn.innerHTML = show
+      ? '<i class="fa-solid fa-eye-slash"></i>'
+      : '<i class="fa-solid fa-eye"></i>';
+  }
+
+  function toggleNikVisibility() {
+    const input = document.getElementById('nikInput');
+    setNikVisible(input.type === 'password');
+    input.focus();
+  }
+
   function showError(msg) {
     document.getElementById('errorMsg').textContent = msg;
     document.getElementById('loginError').style.display = 'flex';
@@ -2186,6 +2224,7 @@
     currentPollingAdminId = '';
 
     document.getElementById('nikInput').value = '';
+    setNikVisible(false);
     document.getElementById('loginError').style.display = 'none';
     document.getElementById('dashboardView').style.display = 'none';
     document.getElementById('bottomNavbar').style.display = 'none';
